@@ -1,4 +1,4 @@
-package com.d121211017.gamedeales.ui.screen
+package com.d121211017.gamedeales.ui
 
 class GameDealScreen {
 }
