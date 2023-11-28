@@ -10,6 +10,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -32,7 +33,7 @@ fun GameDealApp(){
 @Composable
 fun GameDealAppBar(modifier: Modifier = Modifier){
     TopAppBar(
-        title = { Text("Deal Me Some Games", textAlign = TextAlign.Center)},
+        title = { Text("Deal Me Some Games", fontWeight = FontWeight.Bold)},
         colors = TopAppBarDefaults.mediumTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer
         ),
