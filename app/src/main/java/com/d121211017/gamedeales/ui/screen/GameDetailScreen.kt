@@ -9,6 +9,11 @@ fun GameDetailScreen(){
 
 }
 
+@Composable
+fun GameDetailHeader(){
+
+}
+
 @Preview
 @Composable
 fun GameDetailScreenPreview(){

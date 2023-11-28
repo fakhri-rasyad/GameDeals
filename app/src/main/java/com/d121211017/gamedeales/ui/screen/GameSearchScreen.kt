@@ -20,18 +20,19 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -106,17 +107,25 @@ fun IconAndDetail(@DrawableRes image: Int, description: String, modifier: Modifi
 }
 @Composable
 fun GameDisplayCard(gameThumbnail: Int, gameName: String){
-    Card(border = BorderStroke(1.dp, color = Color.Cyan)){
+    Card(
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondary),
+        border = BorderStroke(1.dp, SolidColor(MaterialTheme.colorScheme.tertiary))
+
+    ){
         Column(
-            Modifier.fillMaxWidth().padding(8.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             ) {
             Image(
                 painterResource(id = gameThumbnail),
                 contentDescription = gameName,
-                Modifier.height(128.dp).width(96.dp)
+                Modifier
+                    .height(128.dp)
+                    .width(96.dp)
                 )
-            Text(gameName, fontWeight = FontWeight.Bold)
+            Text(gameName, color = Color.Black,fontWeight = FontWeight.Bold)
         }
     }
 }

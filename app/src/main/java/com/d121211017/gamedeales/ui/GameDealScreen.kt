@@ -35,7 +35,7 @@ fun GameDealAppBar(modifier: Modifier = Modifier){
     TopAppBar(
         title = { Text("Deal Me Some Games", fontWeight = FontWeight.Bold)},
         colors = TopAppBarDefaults.mediumTopAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer
+            containerColor = MaterialTheme.colorScheme.primary
         ),
         )
 }
