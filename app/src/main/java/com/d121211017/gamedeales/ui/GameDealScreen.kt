@@ -14,6 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.d121211017.gamedeales.ui.screen.GameDetailScreen
 import com.d121211017.gamedeales.ui.screen.GameSearchScreen
 import com.d121211017.gamedeales.ui.theme.GameDealesTheme
 
@@ -22,7 +23,11 @@ fun GameDealApp(){
     Scaffold(
         topBar = { GameDealAppBar(Modifier.padding(16.dp)) }
     ) {innerPadding ->
-        Column(Modifier.padding(innerPadding).padding(16.dp)) {
+        Column(
+            Modifier
+                .padding(innerPadding)
+                .padding(16.dp)) {
+//            GameDetailScreen()
             GameSearchScreen()
         }
 

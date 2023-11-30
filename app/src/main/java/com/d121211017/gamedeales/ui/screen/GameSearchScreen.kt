@@ -1,7 +1,5 @@
 package com.d121211017.gamedeales.ui.screen
 
-import android.graphics.drawable.Icon
-import android.widget.GridLayout
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -22,7 +20,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -33,14 +30,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.d121211017.gamedeales.R
 import com.d121211017.gamedeales.ui.theme.GameDealesTheme
+import kotlin.random.Random
 
 @Composable
 fun GameSearchScreen(modifier: Modifier = Modifier){
@@ -106,40 +106,77 @@ fun IconAndDetail(@DrawableRes image: Int, description: String, modifier: Modifi
     }
 }
 @Composable
-fun GameDisplayCard(gameThumbnail: Int, gameName: String){
+fun GameDisplayCard(gameThumbnail: Int, gameName: String, isList: Boolean){
     Card(
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondary),
         border = BorderStroke(1.dp, SolidColor(MaterialTheme.colorScheme.tertiary))
 
     ){
-        Column(
+        if(isList){
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Image(
+                    painterResource(id = gameThumbnail),
+                    contentDescription = gameName,
+                    Modifier.size(height = 72.dp, width = 128.dp),
+                    contentScale = ContentScale.Crop
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    gameName,
+                    color = Color.Black,
+                    fontWeight = FontWeight.Bold,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 2
+                )
+            }
+        }
+        else {
+            Column(
             Modifier
                 .fillMaxWidth()
                 .padding(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
+            horizontalAlignment = Alignment.CenterHorizontally
             ) {
             Image(
                 painterResource(id = gameThumbnail),
                 contentDescription = gameName,
-                Modifier
-                    .height(128.dp)
-                    .width(96.dp)
+                Modifier.size(height = 72.dp, width = 128.dp),
+                contentScale = ContentScale.Crop
                 )
-            Text(gameName, color = Color.Black,fontWeight = FontWeight.Bold)
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                gameName,
+                color = Color.Black,
+                fontWeight = FontWeight.Bold,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1
+                )
         }
-    }
+    }}
 }
 
 @Composable
 fun GameDisplayGrid(){
+    val storaImages = arrayOf(R.drawable.batman, R.drawable.batman_2, R.drawable.arkham)
+    val gameName = arrayOf("TEST MEMEMEMEM", "MMEEMEMEMM", "Me ME ME ME ME ME ME ME ME ME ME ME ME")
+    val isList = false
     LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
+        columns = GridCells.Fixed(if(isList) 1 else 2),
         Modifier.padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.spacedBy(24.dp),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         content = {
         items(8){
-            item -> GameDisplayCard(gameThumbnail = R.drawable.help_fill1_wght400_grad0_opsz24, gameName = "TEST ME")
+            _ -> GameDisplayCard(
+            gameThumbnail = storaImages[Random.nextInt(0, storaImages.size)],
+            gameName = gameName[Random.nextInt(0, gameName.size)],
+            isList = isList
+            )
         }
     })
 }
