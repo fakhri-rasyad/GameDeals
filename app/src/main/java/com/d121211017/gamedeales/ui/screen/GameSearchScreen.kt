@@ -75,7 +75,7 @@ fun GameSearchScreen(modifier: Modifier = Modifier){
 
 @Composable
 fun GameSearchBar(){
-    var isListView:Boolean = true
+    var isListView:Boolean = false
     Column {
         Row(Modifier.fillMaxWidth()){
             TextField(
@@ -96,7 +96,7 @@ fun GameSearchBar(){
         Row(Modifier.fillMaxWidth()){
             Button(
                 onClick = {
-                          isListView = !isListView
+                    isListView = !isListView
                 },
                 modifier = Modifier.weight(1f),
                 shape = RoundedCornerShape(8.dp)
@@ -108,7 +108,7 @@ fun GameSearchBar(){
                 onClick = {},
                 modifier = Modifier.weight(1f),
                 shape = RoundedCornerShape(8.dp)
-                ){
+            ){
                 Icon(painter = painterResource(id = if(isListView) R.drawable.view_list_fill1_wght400_grad0_opsz24 else R.drawable.grid_view_fill1_wght400_grad0_opsz24), "gridView")
             }
 
@@ -149,8 +149,7 @@ fun GameDisplayCard(gameThumbnail: Int, gameName: String, isList: Boolean){
 fun GameListCard(gameName: String,gameThumbnail: Int){
     Row(
         Modifier
-            .fillMaxWidth()
-            .padding(8.dp),
+            .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Image(

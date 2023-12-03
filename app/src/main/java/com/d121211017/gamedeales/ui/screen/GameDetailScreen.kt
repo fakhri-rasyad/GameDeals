@@ -1,6 +1,7 @@
 package com.d121211017.gamedeales.ui.screen
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -77,8 +78,8 @@ fun GameDealCard(
             .fillMaxWidth()
             .border(
                 width = 1.dp, brush = SolidColor(MaterialTheme.colorScheme.tertiary),
-                shape = RoundedCornerShape(8.dp)
-            )
+                shape = RoundedCornerShape(8.dp))
+            .background(MaterialTheme.colorScheme.primary)
             .padding(8.dp),
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically
@@ -106,6 +107,7 @@ fun GameDealCard(
                 horizontalArrangement = Arrangement.End){
                 Text(
                     "\$$initialPrice",
+
                     textAlign = TextAlign.End,
                     textDecoration = TextDecoration.LineThrough)
                 Spacer(

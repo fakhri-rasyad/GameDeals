@@ -19,7 +19,9 @@ import com.d121211017.gamedeales.ui.screen.GameSearchScreen
 import com.d121211017.gamedeales.ui.theme.GameDealesTheme
 
 @Composable
-fun GameDealApp(){
+fun GameDealApp(
+    viewModel: GameViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+){
     Scaffold(
         topBar = { GameDealAppBar(Modifier.padding(16.dp)) }
     ) {innerPadding ->
@@ -27,8 +29,8 @@ fun GameDealApp(){
             Modifier
                 .padding(innerPadding)
                 .padding(16.dp)) {
-//            GameDetailScreen()
-            GameSearchScreen()
+            GameDetailScreen()
+//            GameSearchScreen()
         }
 
     }
