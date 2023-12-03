@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 class GameViewModel: ViewModel() {
-    private val _uistate = MutableStateFlow(GameDealUiState(isList = true))
+    private val _uistate = MutableStateFlow(GameDealUiState(isList = true, appBarText = "Deal Me Some Games"))
     val uistate: StateFlow<GameDealUiState> = _uistate.asStateFlow()
 
     fun changeGameView(){

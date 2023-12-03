@@ -9,9 +9,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.d121211017.gamedeales.ui.screen.GameDetailScreen
@@ -23,14 +24,15 @@ fun GameDealApp(
     viewModel: GameViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
 ){
     Scaffold(
-        topBar = { GameDealAppBar(Modifier.padding(16.dp)) }
+        topBar = { GameDealAppBar(Modifier.padding(16.dp), currentScreen = "Deal Me Some Game", canNavigateBack = true) }
     ) {innerPadding ->
+        val uistate by viewModel.uistate.collectAsState()
         Column(
             Modifier
                 .padding(innerPadding)
                 .padding(16.dp)) {
-            GameDetailScreen()
-//            GameSearchScreen()
+//            GameDetailScreen()
+            GameSearchScreen(isListView = uistate.isList, changeGameView = {viewModel.changeGameView()})
         }
 
     }
@@ -38,12 +40,19 @@ fun GameDealApp(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun GameDealAppBar(modifier: Modifier = Modifier){
+fun GameDealAppBar(modifier: Modifier = Modifier, currentScreen: String, canNavigateBack: Boolean){
     TopAppBar(
-        title = { Text("Deal Me Some Games", fontWeight = FontWeight.Bold)},
+        title = { Text(currentScreen, fontWeight = FontWeight.Bold)},
         colors = TopAppBarDefaults.mediumTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.primary
         ),
+//        navigationIcon = {
+//            if(canNavigateBack){
+//                IconButton(onClick = { /*TODO*/ }) {
+//                    Icon(imageVector = Icons.Rounded.ArrowBack, contentDescription = "Back Arrow")
+//                }
+//            }
+//        }
         )
 }
 

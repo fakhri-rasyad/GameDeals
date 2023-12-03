@@ -36,18 +36,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.d121211017.gamedeales.R
-import com.d121211017.gamedeales.ui.theme.GameDealesTheme
 import kotlin.random.Random
 
 @Composable
-fun GameSearchScreen(modifier: Modifier = Modifier){
+fun GameSearchScreen(isListView: Boolean ,changeGameView: () -> Unit ,modifier: Modifier = Modifier){
     Column(modifier){
-        GameSearchBar()
-        GameDisplayGrid()
+        GameSearchBar(isListView = isListView ,changeGameView = changeGameView)
+        GameDisplayGrid(isListView = isListView)
 //        GameDisplayCard(gameThumbnail = R.drawable.help_fill1_wght400_grad0_opsz24, gameName = "Game Name Placeholder")
 //        //    IconAndDetail(
 ////        image = R.drawable.search_fill1_wght400_grad0_opsz24,
@@ -74,8 +72,7 @@ fun GameSearchScreen(modifier: Modifier = Modifier){
 }
 
 @Composable
-fun GameSearchBar(){
-    var isListView:Boolean = false
+fun GameSearchBar(isListView:Boolean ,changeGameView: ()->Unit){
     Column {
         Row(Modifier.fillMaxWidth()){
             TextField(
@@ -95,9 +92,7 @@ fun GameSearchBar(){
         }
         Row(Modifier.fillMaxWidth()){
             Button(
-                onClick = {
-                    isListView = !isListView
-                },
+                onClick = {},
                 modifier = Modifier.weight(1f),
                 shape = RoundedCornerShape(8.dp)
             ){
@@ -105,7 +100,7 @@ fun GameSearchBar(){
                     painter = painterResource(id = R.drawable.sort_fill1_wght400_grad0_opsz24), "gridView")
             }
             Button(
-                onClick = {},
+                onClick = {changeGameView()},
                 modifier = Modifier.weight(1f),
                 shape = RoundedCornerShape(8.dp)
             ){
@@ -195,12 +190,11 @@ fun GameGridCard(gameName: String, gameThumbnail: Int){
 }
 
 @Composable
-fun GameDisplayGrid(){
+fun GameDisplayGrid(isListView: Boolean){
     val storaImages = arrayOf(R.drawable.batman, R.drawable.batman_2, R.drawable.arkham)
     val gameName = arrayOf("TEST MEMEMEMEM", "MMEEMEMEMM", "Me ME ME ME ME ME ME ME ME ME ME ME ME")
-    val isList = false
     LazyVerticalGrid(
-        columns = GridCells.Fixed(if(isList) 1 else 2),
+        columns = GridCells.Fixed(if(isListView) 1 else 2),
         Modifier.padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.spacedBy(24.dp),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -209,20 +203,20 @@ fun GameDisplayGrid(){
             _ -> GameDisplayCard(
             gameThumbnail = storaImages[Random.nextInt(0, storaImages.size)],
             gameName = gameName[Random.nextInt(0, gameName.size)],
-            isList = isList
+            isList = isListView
             )
         }
     })
 }
 
 
-@Preview
-@Composable
-fun GameSearchScreenPreview(){
-    GameDealesTheme {
-        GameSearchScreen(
-            Modifier
-                .fillMaxSize()
-                .padding(32.dp))
-    }
-}
+//@Preview
+//@Composable
+//fun GameSearchScreenPreview(){
+//    GameDealesTheme {
+//        GameSearchScreen(
+////            Modifier
+////                .fillMaxSize()
+////                .padding(32.dp))
+////    }
+//}
