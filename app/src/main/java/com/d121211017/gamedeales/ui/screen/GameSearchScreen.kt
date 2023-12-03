@@ -22,6 +22,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -74,22 +75,46 @@ fun GameSearchScreen(modifier: Modifier = Modifier){
 
 @Composable
 fun GameSearchBar(){
-    Row(Modifier.fillMaxWidth()){
-        TextField(
-            value = "",
-            onValueChange = {},
-            modifier = Modifier
-                .height(48.dp)
-                .weight(2f))
-        Button(
-            onClick = { /*TODO*/ },
-            modifier = Modifier.height(48.dp),
-            shape = RoundedCornerShape(8.dp))
-        {
-            Icon(imageVector = Icons.Default.Search, contentDescription = "")
+    var isListView:Boolean = true
+    Column {
+        Row(Modifier.fillMaxWidth()){
+            TextField(
+                value = "",
+                onValueChange = {},
+                modifier = Modifier
+                    .height(48.dp)
+                    .weight(2f))
+            Button(
+                onClick = { /*TODO*/ },
+                modifier = Modifier.height(48.dp),
+                shape = RoundedCornerShape(8.dp)
+            )
+            {
+                Icon(imageVector = Icons.Default.Search, contentDescription = "")
+            }
+        }
+        Row(Modifier.fillMaxWidth()){
+            Button(
+                onClick = {
+                          isListView = !isListView
+                },
+                modifier = Modifier.weight(1f),
+                shape = RoundedCornerShape(8.dp)
+            ){
+                Icon(
+                    painter = painterResource(id = R.drawable.sort_fill1_wght400_grad0_opsz24), "gridView")
+            }
+            Button(
+                onClick = {},
+                modifier = Modifier.weight(1f),
+                shape = RoundedCornerShape(8.dp)
+                ){
+                Icon(painter = painterResource(id = if(isListView) R.drawable.view_list_fill1_wght400_grad0_opsz24 else R.drawable.grid_view_fill1_wght400_grad0_opsz24), "gridView")
+            }
+
         }
     }
-    Spacer(Modifier.height(32.dp))
+    Spacer(Modifier.height(16.dp))
 
 }
 
@@ -113,51 +138,61 @@ fun GameDisplayCard(gameThumbnail: Int, gameName: String, isList: Boolean){
 
     ){
         if(isList){
-            Row(
-                Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Image(
-                    painterResource(id = gameThumbnail),
-                    contentDescription = gameName,
-                    Modifier.size(height = 72.dp, width = 128.dp),
-                    contentScale = ContentScale.Crop
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(
-                    gameName,
-                    color = Color.Black,
-                    fontWeight = FontWeight.Bold,
-                    overflow = TextOverflow.Ellipsis,
-                    maxLines = 2
-                )
-            }
+            GameListCard(gameName = gameName, gameThumbnail = gameThumbnail)
         }
         else {
-            Column(
-            Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-            Image(
-                painterResource(id = gameThumbnail),
-                contentDescription = gameName,
-                Modifier.size(height = 72.dp, width = 128.dp),
-                contentScale = ContentScale.Crop
-                )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                gameName,
-                color = Color.Black,
-                fontWeight = FontWeight.Bold,
-                overflow = TextOverflow.Ellipsis,
-                maxLines = 1
-                )
-        }
+            GameGridCard(gameName = gameName, gameThumbnail = gameThumbnail)
     }}
+}
+
+@Composable
+fun GameListCard(gameName: String,gameThumbnail: Int){
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .padding(8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Image(
+            painterResource(id = gameThumbnail),
+            contentDescription = gameName,
+            Modifier.size(height = 72.dp, width = 128.dp),
+            contentScale = ContentScale.Crop
+        )
+        Spacer(modifier = Modifier.width(8.dp))
+        Text(
+            gameName,
+            color = Color.Black,
+            fontWeight = FontWeight.Bold,
+            overflow = TextOverflow.Ellipsis,
+            maxLines = 2
+        )
+    }
+}
+
+@Composable
+fun GameGridCard(gameName: String, gameThumbnail: Int){
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .padding(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Image(
+            painterResource(id = gameThumbnail),
+            contentDescription = gameName,
+            Modifier.size(height = 72.dp, width = 128.dp),
+            contentScale = ContentScale.Crop
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            gameName,
+            color = Color.Black,
+            fontWeight = FontWeight.Bold,
+            overflow = TextOverflow.Ellipsis,
+            maxLines = 1
+        )
+    }
 }
 
 @Composable
