@@ -21,6 +21,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -42,10 +43,14 @@ import com.d121211017.gamedeales.R
 import kotlin.random.Random
 
 @Composable
-fun GameSearchScreen(isListView: Boolean ,changeGameView: () -> Unit ,modifier: Modifier = Modifier){
+fun GameSearchScreen(
+    isListView: Boolean,
+    changeGameView: () -> Unit,
+    onCardClick: () -> Unit,
+    modifier: Modifier = Modifier){
     Column(modifier){
         GameSearchBar(isListView = isListView ,changeGameView = changeGameView)
-        GameDisplayGrid(isListView = isListView)
+        GameDisplayGrid(isListView = isListView, onCardClick = onCardClick)
 //        GameDisplayCard(gameThumbnail = R.drawable.help_fill1_wght400_grad0_opsz24, gameName = "Game Name Placeholder")
 //        //    IconAndDetail(
 ////        image = R.drawable.search_fill1_wght400_grad0_opsz24,
@@ -125,12 +130,18 @@ fun IconAndDetail(@DrawableRes image: Int, description: String, modifier: Modifi
         Text(description, textAlign = TextAlign.Center, lineHeight = 28.sp , fontSize = 28.sp)
     }
 }
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun GameDisplayCard(gameThumbnail: Int, gameName: String, isList: Boolean){
+fun GameDisplayCard(onCardClick:()->Unit , gameThumbnail: Int, gameName: String, isList: Boolean){
     Card(
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondary),
-        border = BorderStroke(1.dp, SolidColor(MaterialTheme.colorScheme.tertiary))
-
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.secondary
+        ),
+        border = BorderStroke(
+            1.dp,
+            SolidColor(MaterialTheme.colorScheme.tertiary)
+        ),
+        onClick = {onCardClick()}
     ){
         if(isList){
             GameListCard(gameName = gameName, gameThumbnail = gameThumbnail)
@@ -190,7 +201,7 @@ fun GameGridCard(gameName: String, gameThumbnail: Int){
 }
 
 @Composable
-fun GameDisplayGrid(isListView: Boolean){
+fun GameDisplayGrid(isListView: Boolean, onCardClick: () -> Unit){
     val storaImages = arrayOf(R.drawable.batman, R.drawable.batman_2, R.drawable.arkham)
     val gameName = arrayOf("TEST MEMEMEMEM", "MMEEMEMEMM", "Me ME ME ME ME ME ME ME ME ME ME ME ME")
     LazyVerticalGrid(
@@ -203,7 +214,8 @@ fun GameDisplayGrid(isListView: Boolean){
             _ -> GameDisplayCard(
             gameThumbnail = storaImages[Random.nextInt(0, storaImages.size)],
             gameName = gameName[Random.nextInt(0, gameName.size)],
-            isList = isListView
+            isList = isListView,
+                onCardClick = onCardClick
             )
         }
     })
