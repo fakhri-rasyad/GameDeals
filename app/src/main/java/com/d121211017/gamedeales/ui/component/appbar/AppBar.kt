@@ -14,15 +14,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import com.d121211017.gamedeales.ui.GameDealScreen
-import com.d121211017.gamedeales.ui.GameViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GameDealAppBar(
-    viewModel: GameViewModel,
     currentScreen: GameDealScreen,
     canNavigateBack: Boolean,
     navigateUp: ()-> Unit,
+    openDrawer: () -> Unit,
     modifier: Modifier = Modifier,
 ){
     TopAppBar(
@@ -45,7 +44,7 @@ fun GameDealAppBar(
                     )
                 }
             } else {
-                IconButton(onClick = {viewModel.openDrawer()}) {
+                IconButton(onClick = {openDrawer()}) {
                     Icon(
                         imageVector = Icons.Rounded.Menu,
                         contentDescription = "Menu"

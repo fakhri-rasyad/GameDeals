@@ -12,8 +12,8 @@ import com.d121211017.gamedeales.ui.theme.NeonBlue
 
 @Composable
 fun DrawerSheet(
-    viewModel: GameViewModel,
     navController: NavHostController,
+    openDrawer: ()->Unit,
     modifier: Modifier = Modifier
 ){
     ModalDrawerSheet {
@@ -22,8 +22,8 @@ fun DrawerSheet(
             Divider(thickness = 4.dp, color = NeonBlue)
             DrawerContent(
                 modifier = modifier,
-                viewModel = viewModel,
-                navController = navController
+                navController = navController,
+                openDrawer = openDrawer
             )
         }
     }
