@@ -1,11 +1,23 @@
 package com.d121211017.gamedeales.ui
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.Menu
+import androidx.compose.material3.Button
+import androidx.compose.material3.Divider
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -23,26 +35,38 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.d121211017.gamedeales.GameDealUiState
+import com.d121211017.gamedeales.R
 import com.d121211017.gamedeales.ui.screen.GameDetailScreen
 import com.d121211017.gamedeales.ui.screen.GameSearchScreen
+import com.d121211017.gamedeales.ui.screen.AboutScreen
 import com.d121211017.gamedeales.ui.theme.GameDealesTheme
+import com.d121211017.gamedeales.ui.theme.GhostWhite
+import com.d121211017.gamedeales.ui.theme.NeonBlue
+import com.d121211017.gamedeales.ui.theme.PistonBlue
 import kotlinx.coroutines.launch
 
 enum class GameDealScreen(val title: String){
     Search(title = "Deal Me Some App"),
     Game(title = "Game Detail"),
+    About(title = "About")
 }
 @Composable
 fun GameDealApp(
@@ -67,9 +91,10 @@ fun GameDealApp(
         viewModel = viewModel,
         currentScreen = currentScreen,
         navController = navController,
-        ui_State = uistate,
+        uiState = uistate,
         openDrawer = {openDrawer()},
-        drawerState = drawerState
+        drawerState = drawerState,
+        modifier = Modifier.padding(16.dp)
     )
 }
 
@@ -113,15 +138,62 @@ fun GameDealDrawer(
     viewModel: GameViewModel,
     currentScreen: GameDealScreen,
     navController:NavHostController,
-    ui_State: GameDealUiState,
+    uiState: GameDealUiState,
     openDrawer: () -> Unit,
-    drawerState:DrawerState
+    drawerState:DrawerState,
+    modifier: Modifier = Modifier,
 ){
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet {
-                Text(text = "TEST ME")
+                Column{
+                    Column(
+                        modifier = Modifier
+                            .background(
+                                brush = Brush.verticalGradient(
+                                    colors = listOf(
+                                        PistonBlue,
+                                        NeonBlue
+                                    )
+                                )
+                            )
+                            .fillMaxWidth()
+                            .padding(16.dp)){
+                        Image(
+                            painterResource(id = R.drawable.profile_picture),
+                            contentScale = ContentScale.FillBounds,
+                            contentDescription = "Profile",
+                            modifier = Modifier
+                                .size(64.dp)
+                                .clip(shape = CircleShape)
+                                .border(
+                                    width = 2.dp,
+                                    color = Color.Transparent,
+                                    shape = CircleShape
+                                )
+                        )
+                        Text("Fakhri Rasyad", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = GhostWhite)
+                        Text("D121211017", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = GhostWhite)
+                        Text("Projek Mobile: Game Deals App", fontWeight = FontWeight.Bold, fontSize = 16.sp, color = GhostWhite)
+                    }
+                    Divider(thickness = 4.dp, color = NeonBlue)
+                    Column(modifier) {
+                        Button(onClick = {
+                            navController.navigate(GameDealScreen.About.name)
+                            openDrawer()
+                        }) {
+                            Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically){
+                                Icon(
+                                    imageVector = Icons.Rounded.Info,
+                                    contentDescription = "Info"
+                                )
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text("Information")
+                            }
+                        }
+                    }
+                }
             }
         }
     ) {
@@ -130,7 +202,7 @@ fun GameDealDrawer(
             currentScreen = currentScreen,
             navController = navController,
             openDrawer = openDrawer,
-            ui_State = ui_State)
+            uiState = uiState)
     }
 }
 @Composable
@@ -139,7 +211,7 @@ fun GameDealScaffold(
     currentScreen: GameDealScreen,
     navController:NavHostController,
     openDrawer: () -> Unit,
-    ui_State: GameDealUiState
+    uiState: GameDealUiState
 ){
     Scaffold(
         topBar = {
@@ -157,7 +229,7 @@ fun GameDealScaffold(
             viewModel = viewModel,
             innerPadding = innerPadding,
             navController = navController,
-            ui_State = ui_State
+            uiState = uiState
         )
 
     }
@@ -168,7 +240,7 @@ fun GameDealContent(
     viewModel: GameViewModel,
     innerPadding : PaddingValues,
     navController:NavHostController,
-    ui_State: GameDealUiState
+    uiState: GameDealUiState
 ){
     NavHost(
         navController = navController,
@@ -181,7 +253,7 @@ fun GameDealContent(
             GameDealScreen.Search.name
         ){
             GameSearchScreen(
-                isListView = ui_State.isList,
+                isListView = uiState.isList,
                 changeGameView = {viewModel.changeGameView()},
                 onCardClick = {navController.navigate(GameDealScreen.Game.name)}
             )
@@ -191,6 +263,11 @@ fun GameDealContent(
         ){
             val context = LocalContext.current
             GameDetailScreen()
+        }
+        composable(
+            GameDealScreen.About.name
+        ){
+            AboutScreen()
         }
     }
 }
