@@ -7,6 +7,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -54,7 +55,9 @@ fun GameDealApp(
         NavHost(
             navController = navController,
             startDestination = GameDealScreen.Search.name,
-            modifier = Modifier.padding(innerPadding).padding(16.dp)
+            modifier = Modifier
+                .padding(innerPadding)
+                .padding(16.dp)
             ){
             composable(
                 GameDealScreen.Search.name
@@ -104,6 +107,12 @@ fun GameDealAppBar(
 
 @Composable
 fun GameDealDrawer(){
+    ModalNavigationDrawer(drawerContent = { /*TODO*/ }) {
+        
+    }
+}
+@Composable
+fun GameDealScaffold(){
 
 }
 
