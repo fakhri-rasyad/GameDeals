@@ -47,6 +47,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -74,26 +75,15 @@ fun GameDealApp(
     navController: NavHostController = rememberNavController()
 ){
     val backStackEntry by navController.currentBackStackEntryAsState()
-    val currentScreen = GameDealScreen.valueOf(backStackEntry?.destination?.route ?: GameDealScreen.Search.name)
+    val currentScreen = GameDealScreen.valueOf(
+        backStackEntry?.destination?.route ?: GameDealScreen.Search.name)
     val uistate by viewModel.uistate.collectAsState()
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val scope = rememberCoroutineScope()
-
-    fun openDrawer(){
-        scope.launch{
-            drawerState.apply {
-                if(isClosed) open() else close()
-            }
-        }
-    }
 
     GameDealDrawer(
         viewModel = viewModel,
         currentScreen = currentScreen,
         navController = navController,
         uiState = uistate,
-        openDrawer = {openDrawer()},
-        drawerState = drawerState,
         modifier = Modifier.padding(16.dp)
     )
 }
@@ -101,16 +91,20 @@ fun GameDealApp(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GameDealAppBar(
+    viewModel: GameViewModel,
     currentScreen: GameDealScreen,
     canNavigateBack: Boolean,
     navigateUp: ()-> Unit,
-    openDrawer: () -> Unit,
     modifier: Modifier = Modifier,
     ){
     TopAppBar(
-        title = {Text(currentScreen.title, fontWeight = FontWeight.Bold)},
-        colors = TopAppBarDefaults.mediumTopAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primary
+        title = {
+            Text(
+                currentScreen.title,
+                fontWeight = FontWeight.Bold)},
+        colors = TopAppBarDefaults
+            .mediumTopAppBarColors(
+                containerColor = MaterialTheme.colorScheme.primary
         ),
         modifier = modifier,
         navigationIcon = {
@@ -122,7 +116,7 @@ fun GameDealAppBar(
                     )
                 }
             } else {
-                IconButton(onClick = openDrawer) {
+                IconButton(onClick = {viewModel.openDrawer()}) {
                     Icon(
                         imageVector = Icons.Rounded.Menu,
                         contentDescription = "Menu"
@@ -139,49 +133,19 @@ fun GameDealDrawer(
     currentScreen: GameDealScreen,
     navController:NavHostController,
     uiState: GameDealUiState,
-    openDrawer: () -> Unit,
-    drawerState:DrawerState,
     modifier: Modifier = Modifier,
 ){
     ModalNavigationDrawer(
-        drawerState = drawerState,
+        drawerState = DrawerState(uiState.isDrawerOpen),
         drawerContent = {
             ModalDrawerSheet {
                 Column{
-                    Column(
-                        modifier = Modifier
-                            .background(
-                                brush = Brush.verticalGradient(
-                                    colors = listOf(
-                                        PistonBlue,
-                                        NeonBlue
-                                    )
-                                )
-                            )
-                            .fillMaxWidth()
-                            .padding(16.dp)){
-                        Image(
-                            painterResource(id = R.drawable.profile_picture),
-                            contentScale = ContentScale.FillBounds,
-                            contentDescription = "Profile",
-                            modifier = Modifier
-                                .size(64.dp)
-                                .clip(shape = CircleShape)
-                                .border(
-                                    width = 2.dp,
-                                    color = Color.Transparent,
-                                    shape = CircleShape
-                                )
-                        )
-                        Text("Fakhri Rasyad", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = GhostWhite)
-                        Text("D121211017", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = GhostWhite)
-                        Text("Projek Mobile: Game Deals App", fontWeight = FontWeight.Bold, fontSize = 16.sp, color = GhostWhite)
-                    }
+                    DrawerHeader()
                     Divider(thickness = 4.dp, color = NeonBlue)
                     Column(modifier) {
                         Button(onClick = {
                             navController.navigate(GameDealScreen.About.name)
-                            openDrawer()
+                            viewModel.openDrawer()
                         }) {
                             Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically){
                                 Icon(
@@ -201,7 +165,7 @@ fun GameDealDrawer(
             viewModel = viewModel,
             currentScreen = currentScreen,
             navController = navController,
-            openDrawer = openDrawer,
+//            openDrawer = openDrawer,
             uiState = uiState)
     }
 }
@@ -210,15 +174,14 @@ fun GameDealScaffold(
     viewModel: GameViewModel,
     currentScreen: GameDealScreen,
     navController:NavHostController,
-    openDrawer: () -> Unit,
     uiState: GameDealUiState
 ){
     Scaffold(
         topBar = {
             GameDealAppBar(
+                viewModel = viewModel,
                 currentScreen = currentScreen,
                 canNavigateBack = navController.previousBackStackEntry != null,
-                openDrawer = openDrawer,
                 navigateUp = {
                     navController.navigateUp()
                 },
@@ -232,6 +195,39 @@ fun GameDealScaffold(
             uiState = uiState
         )
 
+    }
+}
+
+@Composable
+fun DrawerHeader(){
+    Column(
+        modifier = Modifier
+            .background(
+                brush = Brush.verticalGradient(
+                    colors = listOf(
+                        PistonBlue,
+                        NeonBlue
+                    )
+                )
+            )
+            .fillMaxWidth()
+            .padding(16.dp)){
+        Image(
+            painterResource(id = R.drawable.profile_picture),
+            contentScale = ContentScale.FillBounds,
+            contentDescription = "Profile",
+            modifier = Modifier
+                .size(64.dp)
+                .clip(shape = CircleShape)
+                .border(
+                    width = 2.dp,
+                    color = Color.Transparent,
+                    shape = CircleShape
+                )
+        )
+        Text("Fakhri Rasyad", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = GhostWhite)
+        Text("D121211017", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = GhostWhite)
+        Text("Projek Mobile: Game Deals App", fontWeight = FontWeight.Bold, fontSize = 16.sp, color = GhostWhite)
     }
 }
 
