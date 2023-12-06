@@ -1,6 +1,5 @@
 package com.d121211017.gamedeales.ui
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
@@ -31,7 +30,7 @@ import com.d121211017.gamedeales.ui.theme.GameDealesTheme
 
 enum class GameDealScreen(val title: String){
     Search(title = "Deal Me Some App"),
-    Detail(title = "Game Name")
+    Game(title = "Game Detail"),
 }
 @Composable
 fun GameDealApp(
@@ -40,6 +39,7 @@ fun GameDealApp(
 ){
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentScreen = GameDealScreen.valueOf(backStackEntry?.destination?.route ?: GameDealScreen.Search.name)
+    val uistate by viewModel.uistate.collectAsState()
     Scaffold(
         topBar = {
             GameDealAppBar(
@@ -51,7 +51,6 @@ fun GameDealApp(
             )
         }
     ) {innerPadding ->
-        val uistate by viewModel.uistate.collectAsState()
         NavHost(
             navController = navController,
             startDestination = GameDealScreen.Search.name,
@@ -63,11 +62,11 @@ fun GameDealApp(
                 GameSearchScreen(
                     isListView = uistate.isList,
                     changeGameView = {viewModel.changeGameView()},
-                    onCardClick = {navController.navigate("Detail")}
+                    onCardClick = {navController.navigate(GameDealScreen.Game.name)}
                 )
             }
             composable(
-                GameDealScreen.Detail.name
+                GameDealScreen.Game.name
             ){
                 val context = LocalContext.current
                 GameDetailScreen()
@@ -101,6 +100,11 @@ fun GameDealAppBar(
             }
         }
         )
+}
+
+@Composable
+fun GameDealDrawer(){
+
 }
 
 @Preview
