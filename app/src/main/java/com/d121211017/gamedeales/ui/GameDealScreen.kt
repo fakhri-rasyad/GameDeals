@@ -101,10 +101,13 @@ fun GameDealScaffold(
             GameDealAppBar(
                 currentScreen = currentScreen,
                 canNavigateBack = navController.previousBackStackEntry != null,
+                isLightTheme = uiState.isLightTheme,
                 navigateUp = {
                     navController.navigateUp()
                 },
-                openDrawer = openDrawer
+                openDrawer = {openDrawer()},
+                changeTheme = {viewModel.changeTheme()}
+
             )
         }
     ) {innerPadding ->

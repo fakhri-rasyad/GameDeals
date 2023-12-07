@@ -20,5 +20,8 @@ class GameViewModel: ViewModel() {
         _uistate.update { currentState -> currentState.copy(isList = !_uistate.value.isList) }
 
     }
+    fun changeTheme(){
+        _uistate.update {currentState -> currentState.copy(isLightTheme = !_uistate.value.isLightTheme)}
+    }
 
 }

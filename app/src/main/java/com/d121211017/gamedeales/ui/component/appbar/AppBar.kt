@@ -1,8 +1,10 @@
 package com.d121211017.gamedeales.ui.component.appbar
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Menu
+import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -12,7 +14,10 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import com.d121211017.gamedeales.R
 import com.d121211017.gamedeales.ui.GameDealScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -20,8 +25,10 @@ import com.d121211017.gamedeales.ui.GameDealScreen
 fun GameDealAppBar(
     currentScreen: GameDealScreen,
     canNavigateBack: Boolean,
+    isLightTheme:Boolean,
     navigateUp: ()-> Unit,
     openDrawer: () -> Unit,
+    changeTheme:() -> Unit,
     modifier: Modifier = Modifier,
 ){
     TopAppBar(
@@ -54,6 +61,17 @@ fun GameDealAppBar(
                         tint = MaterialTheme.colorScheme.onPrimary
                     )
                 }
+            }
+        },
+        actions = {
+            IconButton(onClick = {changeTheme()}){
+                Icon(
+                    painter = painterResource(
+                        id = if(isLightTheme) R.drawable.dark_mode else R.drawable.light_mode
+                    ),
+                    contentDescription = "Theme Button",
+                    tint = MaterialTheme.colorScheme.onPrimary
+                )
             }
         }
     )
