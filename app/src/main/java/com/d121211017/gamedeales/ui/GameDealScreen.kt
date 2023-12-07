@@ -24,7 +24,6 @@ import com.d121211017.gamedeales.ui.component.drawer.DrawerSheet
 import com.d121211017.gamedeales.ui.screen.AboutScreen
 import com.d121211017.gamedeales.ui.screen.GameDetailScreen
 import com.d121211017.gamedeales.ui.screen.GameSearchScreen
-import com.d121211017.gamedeales.ui.theme.GameDealesTheme
 import kotlinx.coroutines.launch
 
 enum class GameDealScreen(val title: String){
@@ -152,13 +151,5 @@ fun GameDealContent(
         ){
             AboutScreen()
         }
-    }
-}
-
-@Preview
-@Composable
-fun GameDealScreenPreview(){
-    GameDealesTheme {
-        GameDealApp()
     }
 }

@@ -16,9 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.d121211017.gamedeales.ui.theme.GameDealesTheme
 
 @Composable
 fun AboutScreen(modifier: Modifier = Modifier){
@@ -49,13 +47,5 @@ fun AboutHeader(){
             Spacer(Modifier.height(8.dp))
             Text("Version 1.0.0")
         }
-    }
-}
-
-@Preview
-@Composable
-fun Preview(){
-    GameDealesTheme {
-        AboutScreen()
     }
 }

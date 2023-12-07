@@ -133,11 +133,7 @@ fun IconAndDetail(@DrawableRes image: Int, description: String, modifier: Modifi
 fun GameDisplayCard(onCardClick:()->Unit , gameThumbnail: Int, gameName: String, isList: Boolean){
     Card(
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.secondary
-        ),
-        border = BorderStroke(
-            1.dp,
-            SolidColor(MaterialTheme.colorScheme.tertiary)
+            containerColor = MaterialTheme.colorScheme.primary
         ),
         onClick = {onCardClick()}
     ){
@@ -165,7 +161,7 @@ fun GameListCard(gameName: String,gameThumbnail: Int){
         Spacer(modifier = Modifier.width(8.dp))
         Text(
             gameName,
-            color = Color.Black,
+//            color = Color.Black,
             fontWeight = FontWeight.Bold,
             overflow = TextOverflow.Ellipsis,
             maxLines = 2
@@ -190,7 +186,7 @@ fun GameGridCard(gameName: String, gameThumbnail: Int){
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             gameName,
-            color = Color.Black,
+//            color = MaterialTheme.colorScheme.onPrimary,
             fontWeight = FontWeight.Bold,
             overflow = TextOverflow.Ellipsis,
             maxLines = 1
@@ -199,7 +195,7 @@ fun GameGridCard(gameName: String, gameThumbnail: Int){
 }
 
 @Composable
-fun GameDisplayGrid(isListView: Boolean, onCardClick: () -> Unit){
+fun GameDisplayGrid(isListView: Boolean = false, onCardClick: () -> Unit){
     val storaImages = arrayOf(R.drawable.batman, R.drawable.batman_2, R.drawable.arkham)
     val gameName = arrayOf("TEST MEMEMEMEM", "MMEEMEMEMM", "Me ME ME ME ME ME ME ME ME ME ME ME ME")
     LazyVerticalGrid(
@@ -219,14 +215,3 @@ fun GameDisplayGrid(isListView: Boolean, onCardClick: () -> Unit){
     })
 }
 
-
-//@Preview
-//@Composable
-//fun GameSearchScreenPreview(){
-//    GameDealesTheme {
-//        GameSearchScreen(
-////            Modifier
-////                .fillMaxSize()
-////                .padding(32.dp))
-////    }
-//}

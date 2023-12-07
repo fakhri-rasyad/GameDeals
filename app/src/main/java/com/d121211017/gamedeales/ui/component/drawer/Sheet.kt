@@ -7,8 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.d121211017.gamedeales.ui.GameViewModel
-import com.d121211017.gamedeales.ui.theme.NeonBlue
 
 @Composable
 fun DrawerSheet(
@@ -19,7 +17,7 @@ fun DrawerSheet(
     ModalDrawerSheet {
         Column {
             DrawerHeader()
-            Divider(thickness = 4.dp, color = NeonBlue)
+            Divider(thickness = 4.dp)
             DrawerContent(
                 modifier = modifier,
                 navController = navController,

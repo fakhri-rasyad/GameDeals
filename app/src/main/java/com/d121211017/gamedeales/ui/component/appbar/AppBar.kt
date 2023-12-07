@@ -28,7 +28,9 @@ fun GameDealAppBar(
         title = {
             Text(
                 currentScreen.title,
-                fontWeight = FontWeight.Bold)
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onPrimary
+            )
         },
         colors = TopAppBarDefaults
             .mediumTopAppBarColors(
@@ -40,14 +42,16 @@ fun GameDealAppBar(
                 IconButton(onClick = navigateUp) {
                     Icon(
                         imageVector = Icons.Rounded.ArrowBack,
-                        contentDescription = "Back Arrow"
+                        contentDescription = "Back Arrow",
+                        tint = MaterialTheme.colorScheme.onPrimary
                     )
                 }
             } else {
                 IconButton(onClick = {openDrawer()}) {
                     Icon(
                         imageVector = Icons.Rounded.Menu,
-                        contentDescription = "Menu"
+                        contentDescription = "Menu",
+                        tint = MaterialTheme.colorScheme.onPrimary
                     )
                 }
             }

@@ -32,7 +32,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.d121211017.gamedeales.R
-import com.d121211017.gamedeales.ui.theme.GameDealesTheme
 import kotlin.random.Random
 
 @Composable
@@ -76,10 +75,10 @@ fun GameDealCard(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .border(
-                width = 1.dp, brush = SolidColor(MaterialTheme.colorScheme.tertiary),
-                shape = RoundedCornerShape(8.dp))
-            .background(MaterialTheme.colorScheme.primary)
+            .background(
+                color = MaterialTheme.colorScheme.primary,
+                shape = RoundedCornerShape(16.dp)
+                )
             .padding(8.dp),
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically
@@ -101,20 +100,24 @@ fun GameDealCard(
             Text(
                 text = gameName,
                 fontSize = 24.sp,
+                color = MaterialTheme.colorScheme.onPrimary
             )
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.End){
                 Text(
                     "\$$initialPrice",
-
                     textAlign = TextAlign.End,
-                    textDecoration = TextDecoration.LineThrough)
+                    textDecoration = TextDecoration.LineThrough,
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
                 Spacer(
                     modifier = Modifier.width(8.dp))
                 Text(
                     "\$$currentPrice",
-                    textAlign = TextAlign.End)
+                    textAlign = TextAlign.End,
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
             }
         }
     }
@@ -133,13 +136,5 @@ fun GameDealList(){
             gameName = "Store Name")
             Spacer(modifier = Modifier.height(16.dp))
         }
-    }
-}
-
-@Preview
-@Composable
-fun GameDetailScreenPreview(){
-    GameDealesTheme {
-        GameDetailScreen()
     }
 }

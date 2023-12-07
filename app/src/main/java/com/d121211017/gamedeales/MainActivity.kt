@@ -11,13 +11,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.d121211017.gamedeales.ui.GameDealApp
-import com.d121211017.gamedeales.ui.theme.GameDealesTheme
+import com.d121211017.gamedeales.ui.theme.GameDealsTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            GameDealesTheme {
+            GameDealsTheme(useDarkTheme = true){
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -41,7 +41,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    GameDealesTheme {
+    GameDealsTheme {
         Greeting("Android")
     }
 }
