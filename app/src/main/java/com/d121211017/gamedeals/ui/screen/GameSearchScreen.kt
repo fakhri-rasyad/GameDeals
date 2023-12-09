@@ -1,12 +1,12 @@
-package com.d121211017.gamedeales.ui.screen
+package com.d121211017.gamedeals.ui.screen
 
 import androidx.annotation.DrawableRes
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -28,8 +28,6 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -37,45 +35,56 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.d121211017.gamedeales.R
+import com.d121211017.gamedeals.GameScreenState
+import com.d121211017.gamedeals.R
+import com.d121211017.gamedeals.ui.GameViewModel
 import kotlin.random.Random
 
 @Composable
 fun GameSearchScreen(
     isListView: Boolean,
+    screenState: GameScreenState,
+    viewModel: GameViewModel,
     changeGameView: () -> Unit,
     onCardClick: () -> Unit,
     modifier: Modifier = Modifier){
     Column(modifier){
-        GameSearchBar(isListView = isListView ,changeGameView = changeGameView)
-        GameDisplayGrid(isListView = isListView, onCardClick = onCardClick)
-//        GameDisplayCard(gameThumbnail = R.drawable.help_fill1_wght400_grad0_opsz24, gameName = "Game Name Placeholder")
-//        //    IconAndDetail(
-////        image = R.drawable.search_fill1_wght400_grad0_opsz24,
-////        description = "Ayo Cari Game Anda!",
-////        modifier = Modifier
-////            .fillMaxWidth()
-////            .padding(top = 64.dp)
-////        )
-//        IconAndDetail(
-//            image = R.drawable.help_fill1_wght400_grad0_opsz24,
-//            description = "Sepertinya Game Yang Anda Cari Tidak Ada!",
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .padding(top = 32.dp)
-//        )
-////    IconAndDetail(
-////        image = R.drawable.warning_fill1_wght400_grad0_opsz24,
-////        description = "Sepertinya Jaringan Anda Sedang Bermasalah Silahkan Coba Lagi Nanti",
-////        modifier = Modifier
-////            .fillMaxSize()
-////            .padding(top = 32.dp)
-////    )
+        GameSearchBar(isListView = isListView, viewModel = viewModel ,changeGameView = changeGameView)
+        when(screenState){
+            is GameScreenState.Success ->
+                GameDisplayGrid(isListView = isListView, onCardClick = onCardClick)
+            is GameScreenState.Empty ->
+                IconAndDetail(
+                image = R.drawable.help_fill1_wght400_grad0_opsz24,
+                description = "Sepertinya Game Yang Anda Cari Tidak Ada!",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 32.dp)
+            )
+            is GameScreenState.Failure ->
+                IconAndDetail(
+                image = R.drawable.warning_fill1_wght400_grad0_opsz24,
+                description = "Sepertinya Jaringan Anda Sedang Bermasalah Silahkan Coba Lagi Nanti",
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(top = 32.dp)
+            )
+            is GameScreenState.Start ->
+                IconAndDetail(
+                    image = R.drawable.search_fill1_wght400_grad0_opsz24,
+                    description = "Ayo Cari Game Anda!",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 64.dp)
+                )
+        }
     }
 }
 
 @Composable
-fun GameSearchBar(isListView:Boolean ,changeGameView: ()->Unit){
+fun GameSearchBar(
+    viewModel: GameViewModel,
+    isListView:Boolean ,changeGameView: ()->Unit){
     Column {
         Row(Modifier.fillMaxWidth()){
             TextField(
@@ -85,7 +94,7 @@ fun GameSearchBar(isListView:Boolean ,changeGameView: ()->Unit){
                     .height(48.dp)
                     .weight(2f))
             Button(
-                onClick = { /*TODO*/ },
+                onClick = {viewModel.getStore()},
                 modifier = Modifier.height(48.dp),
                 shape = RoundedCornerShape(8.dp)
             )

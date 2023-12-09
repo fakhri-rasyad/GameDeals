@@ -1,4 +1,4 @@
-package com.d121211017.gamedeales
+package com.d121211017.gamedeals
 
 import org.junit.Test
 

@@ -1,4 +1,4 @@
-package com.d121211017.gamedeales.ui.component.drawer
+package com.d121211017.gamedeals.ui.component.drawer
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Divider

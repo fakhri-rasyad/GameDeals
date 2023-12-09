@@ -1,4 +1,4 @@
-package com.d121211017.gamedeales.ui.component.drawer
+package com.d121211017.gamedeals.ui.component.drawer
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -13,14 +13,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.d121211017.gamedeales.R
+import com.d121211017.gamedeals.R
 
 @Composable
 fun DrawerHeader(){

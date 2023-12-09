@@ -1,4 +1,4 @@
-package com.d121211017.gamedeales
+package com.d121211017.gamedeals
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

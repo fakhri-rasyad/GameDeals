@@ -1,4 +1,4 @@
-package com.d121211017.gamedeales.ui.theme
+package com.d121211017.gamedeals.ui.theme
 import androidx.compose.ui.graphics.Color
 
 val md_theme_light_primary = Color(0xFF00658D)

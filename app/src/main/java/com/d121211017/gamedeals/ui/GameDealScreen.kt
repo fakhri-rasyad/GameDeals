@@ -1,4 +1,4 @@
-package com.d121211017.gamedeales.ui
+package com.d121211017.gamedeals.ui
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
@@ -11,19 +11,18 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.d121211017.gamedeales.GameDealUiState
-import com.d121211017.gamedeales.ui.component.appbar.GameDealAppBar
-import com.d121211017.gamedeales.ui.component.drawer.DrawerSheet
-import com.d121211017.gamedeales.ui.screen.AboutScreen
-import com.d121211017.gamedeales.ui.screen.GameDetailScreen
-import com.d121211017.gamedeales.ui.screen.GameSearchScreen
+import com.d121211017.gamedeals.GameDealUiState
+import com.d121211017.gamedeals.ui.component.appbar.GameDealAppBar
+import com.d121211017.gamedeals.ui.component.drawer.DrawerSheet
+import com.d121211017.gamedeals.ui.screen.AboutScreen
+import com.d121211017.gamedeals.ui.screen.GameDetailScreen
+import com.d121211017.gamedeals.ui.screen.GameSearchScreen
 import kotlinx.coroutines.launch
 
 enum class GameDealScreen(val title: String){
@@ -140,6 +139,8 @@ fun GameDealContent(
         ){
             GameSearchScreen(
                 isListView = uiState.isList,
+                screenState = uiState.screenState,
+                viewModel = viewModel,
                 changeGameView = {viewModel.changeGameView()},
                 onCardClick = {navController.navigate(GameDealScreen.Game.name)}
             )

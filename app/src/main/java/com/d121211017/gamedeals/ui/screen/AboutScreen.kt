@@ -1,4 +1,4 @@
-package com.d121211017.gamedeales.ui.screen
+package com.d121211017.gamedeals.ui.screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row

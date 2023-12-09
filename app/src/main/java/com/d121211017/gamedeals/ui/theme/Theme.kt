@@ -1,4 +1,4 @@
-package com.d121211017.gamedeales.ui.theme
+package com.d121211017.gamedeals.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

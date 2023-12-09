@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.d121211017.gamedeales"
+    namespace = "com.d121211017.gamedeals"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.d121211017.gamedeales"
+        applicationId = "com.d121211017.gamedeals"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

@@ -1,10 +1,12 @@
-package com.d121211017.gamedeales
+package com.d121211017.gamedeals
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -13,9 +15,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.d121211017.gamedeales.ui.GameDealApp
-import com.d121211017.gamedeales.ui.GameViewModel
-import com.d121211017.gamedeales.ui.theme.GameDealsTheme
+import androidx.compose.ui.unit.dp
+import com.d121211017.gamedeals.ui.GameDealApp
+import com.d121211017.gamedeals.ui.GameViewModel
+import com.d121211017.gamedeals.ui.theme.GameDealsTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
