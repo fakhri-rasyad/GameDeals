@@ -1,5 +1,6 @@
 package com.d121211017.gamedeales.ui.component.appbar
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.ArrowBack
@@ -17,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import com.d121211017.gamedeales.R
 import com.d121211017.gamedeales.ui.GameDealScreen
 
