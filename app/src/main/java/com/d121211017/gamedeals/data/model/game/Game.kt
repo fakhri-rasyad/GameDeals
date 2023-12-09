@@ -11,13 +11,13 @@ data class Game(
     @SerialName(value = "cheapestDealID")
     val cheapestDealID: String?,
     @SerialName(value = "external")
-    val `external`: String?,
+    val `external`: String,
     @SerialName(value = "gameID")
-    val gameID: String?,
+    val gameID: String,
     @SerialName(value = "internalName")
-    val internalName: String?,
+    val internalName: String,
     @SerialName(value = "steamAppID")
     val steamAppID: String?,
     @SerialName(value = "thumb")
-    val thumb: String?
+    val thumb: String
 )

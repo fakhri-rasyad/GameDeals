@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -19,6 +20,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -33,14 +35,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.d121211017.gamedeals.GameScreenState
 import com.d121211017.gamedeals.R
+import com.d121211017.gamedeals.data.model.game.Game
 import com.d121211017.gamedeals.ui.GameViewModel
 import kotlin.random.Random
 
@@ -56,7 +62,11 @@ fun GameSearchScreen(
         GameSearchBar(isListView = isListView, viewModel = viewModel ,changeGameView = changeGameView)
         when(screenState){
             is GameScreenState.Success ->
-                GameDisplayGrid(isListView = isListView, onCardClick = onCardClick)
+                GameDisplayGrid(isListView = isListView, gameList = screenState.game ,onCardClick = onCardClick)
+            is GameScreenState.Loading ->
+                Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+                    CircularProgressIndicator()
+                }
             is GameScreenState.Empty ->
                 IconAndDetail(
                 image = R.drawable.help_fill1_wght400_grad0_opsz24,
@@ -155,7 +165,7 @@ fun IconAndDetail(@DrawableRes image: Int, description: String, modifier: Modifi
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun GameDisplayCard(onCardClick:()->Unit , gameThumbnail: Int, gameName: String, isList: Boolean){
+fun GameDisplayCard(onCardClick:()->Unit, game:Game, isList: Boolean){
     Card(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.primary
@@ -163,30 +173,32 @@ fun GameDisplayCard(onCardClick:()->Unit , gameThumbnail: Int, gameName: String,
         onClick = {onCardClick()}
     ){
         if(isList){
-            GameListCard(gameName = gameName, gameThumbnail = gameThumbnail)
+            GameListCard(game = game)
         }
         else {
-            GameGridCard(gameName = gameName, gameThumbnail = gameThumbnail)
+            GameGridCard(game = game)
     }}
 }
 
 @Composable
-fun GameListCard(gameName: String,gameThumbnail: Int){
+fun GameListCard(game: Game){
     Row(
         Modifier
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Image(
-            painterResource(id = gameThumbnail),
-            contentDescription = gameName,
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(game.thumb)
+                .crossfade(true)
+                .build(),
+            contentDescription = game.internalName,
             Modifier.size(height = 72.dp, width = 128.dp),
             contentScale = ContentScale.Crop
         )
         Spacer(modifier = Modifier.width(8.dp))
         Text(
-            gameName,
-//            color = Color.Black,
+            game.external,
             fontWeight = FontWeight.Bold,
             overflow = TextOverflow.Ellipsis,
             maxLines = 2
@@ -195,46 +207,45 @@ fun GameListCard(gameName: String,gameThumbnail: Int){
 }
 
 @Composable
-fun GameGridCard(gameName: String, gameThumbnail: Int){
+fun GameGridCard(game : Game){
     Column(
         Modifier
             .fillMaxWidth()
             .padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Image(
-            painterResource(id = gameThumbnail),
-            contentDescription = gameName,
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(game.thumb)
+                .crossfade(true)
+                .build(),
+            contentDescription = game.internalName,
             Modifier.size(height = 72.dp, width = 128.dp),
             contentScale = ContentScale.Crop
         )
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.width(8.dp))
         Text(
-            gameName,
-//            color = MaterialTheme.colorScheme.onPrimary,
+            game.external,
             fontWeight = FontWeight.Bold,
             overflow = TextOverflow.Ellipsis,
-            maxLines = 1
+            maxLines = 2
         )
     }
 }
 
 @Composable
-fun GameDisplayGrid(isListView: Boolean = false, onCardClick: () -> Unit){
-    val storaImages = arrayOf(R.drawable.batman, R.drawable.batman_2, R.drawable.arkham)
-    val gameName = arrayOf("TEST MEMEMEMEM", "MMEEMEMEMM", "Me ME ME ME ME ME ME ME ME ME ME ME ME")
+fun GameDisplayGrid(gameList:List<Game> ,isListView: Boolean = false, onCardClick: () -> Unit){
     LazyVerticalGrid(
         columns = GridCells.Fixed(if(isListView) 1 else 2),
         Modifier.padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.spacedBy(24.dp),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         content = {
-        items(8){
-            _ -> GameDisplayCard(
-            gameThumbnail = storaImages[Random.nextInt(0, storaImages.size)],
-            gameName = gameName[Random.nextInt(0, gameName.size)],
+        items(gameList.size){
+            index -> GameDisplayCard(
             isList = isListView,
-                onCardClick = onCardClick
+            game = gameList[index],
+            onCardClick = onCardClick
             )
         }
     })

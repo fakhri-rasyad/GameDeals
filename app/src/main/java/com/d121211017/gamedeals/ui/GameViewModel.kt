@@ -52,6 +52,7 @@ class GameViewModel(private val gameDealsRepository: GameDealsRepository): ViewM
     }
 
     fun getGame(gameName:String){
+        _uistate.update { currentState -> currentState.copy(screenState = GameScreenState.Loading) }
         viewModelScope.launch {
             try{
                 val result = gameDealsRepository.getGames(gameName);
