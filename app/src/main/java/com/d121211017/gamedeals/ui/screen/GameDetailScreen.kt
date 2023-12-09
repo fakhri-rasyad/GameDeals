@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,16 +25,29 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.d121211017.gamedeals.DetailScreenState
+import com.d121211017.gamedeals.GameDealUiState
 import com.d121211017.gamedeals.R
+import com.d121211017.gamedeals.ui.GameViewModel
 import kotlin.random.Random
 
 @Composable
-fun GameDetailScreen(){
+fun GameDetailScreen(viewModel: GameViewModel, uistate: GameDealUiState){
     Column(modifier = Modifier
         .fillMaxSize()
-        ){
-        GameDetailHeader(image = R.drawable.batman_2, gameName = "Game Name")
-        GameDealList()
+    ){
+        when(uistate.detailScreenState){
+            is DetailScreenState.Success -> Column {
+                GameDetailHeader(image = R.drawable.batman_2, gameName = "Game Name")
+                GameDealList()
+            }
+            is DetailScreenState.Loading -> Column{
+                CircularProgressIndicator()
+            }
+            is DetailScreenState.Failure -> {
+                Text("Pengambilan data gagal")
+            }
+        }
     }
 
 }
@@ -71,7 +85,7 @@ fun GameDealCard(
             .background(
                 color = MaterialTheme.colorScheme.primary,
                 shape = RoundedCornerShape(16.dp)
-                )
+            )
             .padding(8.dp),
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically

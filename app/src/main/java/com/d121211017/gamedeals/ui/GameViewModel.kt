@@ -35,19 +35,13 @@ class GameViewModel(private val gameDealsRepository: GameDealsRepository): ViewM
     fun changeTheme(){
         _uistate.update {currentState -> currentState.copy(isLightTheme = !_uistate.value.isLightTheme)}
     }
-
     fun getGameDetail(gameId:String){
         viewModelScope.launch {
             try{
-                val result2 = gameDealsRepository.getDeals(gameId)
-//                val result = ""
-//                if(result.isEmpty()){
-//                    _uistate.update { currentState -> currentState.copy(screenState = GameScreenState.Empty) }
-//                }else{
-//                    _uistate.update { currentState ->  currentState.copy(screenState = GameScreenState.Success(result))}
-//                }
+                val data = gameDealsRepository.getDeals(gameId)
+                _uistate.update { currentState -> currentState.copy(detailScreenState = DetailScreenState.Success(data)) }
             }catch(e:IOException){
-                println(e)
+                _uistate.update { currentState -> currentState.copy(detailScreenState = DetailScreenState.Failure) }
             }
         }
     }
@@ -56,11 +50,11 @@ class GameViewModel(private val gameDealsRepository: GameDealsRepository): ViewM
         _uistate.update { currentState -> currentState.copy(searchScreenState = GameScreenState.Loading) }
         viewModelScope.launch {
             try{
-                val result = gameDealsRepository.getGames(gameName);
-                if(result.isEmpty()){
+                val data = gameDealsRepository.getGames(gameName);
+                if(data.isEmpty()){
                     _uistate.update { currentState -> currentState.copy(searchScreenState = GameScreenState.Empty) }
                 }else{
-                    _uistate.update { currentState ->  currentState.copy(searchScreenState = GameScreenState.Success(result))}
+                    _uistate.update { currentState ->  currentState.copy(searchScreenState = GameScreenState.Success(data))}
                 }
             } catch (e: IOException){
                 _uistate.update { currentState -> currentState.copy(searchScreenState = GameScreenState.Failure) }
