@@ -1,4 +1,4 @@
-package com.d121211017.gamedeals.data.gamedeals
+package com.d121211017.gamedeals.data.model.deals
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

@@ -1,6 +1,6 @@
 package com.d121211017.gamedeals
 
-import com.d121211017.gamedeals.data.game.Game
+import com.d121211017.gamedeals.data.model.game.Game
 
 sealed interface GameScreenState {
     object Start:GameScreenState
