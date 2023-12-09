@@ -28,6 +28,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -66,7 +67,7 @@ fun GameSearchScreen(
                 image = R.drawable.warning_fill1_wght400_grad0_opsz24,
                 description = "Sepertinya Jaringan Anda Sedang Bermasalah Silahkan Coba Lagi Nanti",
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxWidth()
                     .padding(top = 32.dp)
             )
             is GameScreenState.Start ->
@@ -75,7 +76,7 @@ fun GameSearchScreen(
                     description = "Ayo Cari Game Anda!",
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 64.dp)
+                        .padding(top = 32.dp)
                 )
         }
     }
@@ -94,7 +95,7 @@ fun GameSearchBar(
                     .height(48.dp)
                     .weight(2f))
             Button(
-                onClick = {viewModel.getStore()},
+                onClick = {viewModel.getGame("batman")},
                 modifier = Modifier.height(48.dp),
                 shape = RoundedCornerShape(8.dp)
             )
@@ -131,10 +132,21 @@ fun IconAndDetail(@DrawableRes image: Int, description: String, modifier: Modifi
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
-        ) {
-        Image(painterResource(id = image), contentDescription = "", Modifier.size(128.dp))
-        Spacer(Modifier.height(16.dp))
-        Text(description, textAlign = TextAlign.Center, lineHeight = 28.sp , fontSize = 28.sp)
+    ) {
+        Image(
+            painterResource(id = image),
+            contentDescription = "",
+            Modifier.size(128.dp),
+            colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.onBackground)
+        )
+        Spacer(
+            Modifier.height(16.dp)
+        )
+        Text(
+            description,
+            textAlign = TextAlign.Center,
+            lineHeight = 28.sp,
+            fontSize = 28.sp)
     }
 }
 @OptIn(ExperimentalMaterial3Api::class)

@@ -31,17 +31,36 @@ class GameViewModel: ViewModel() {
         _uistate.update {currentState -> currentState.copy(isLightTheme = !_uistate.value.isLightTheme)}
     }
 
-    fun getStore(){
+//    fun getStore(){
+//        viewModelScope.launch {
+//            try{
+//                val result = GameDealsApi.retrofitService.getGames(title = "batman")
+//                val result2 = GameDealsApi.retrofitService.getGameDetail(id="200")
+//                println(result2.info.title)
+//                println(result.size)
+////                val result = ""
+//                if(result.isEmpty()){
+//                    _uistate.update { currentState -> currentState.copy(screenState = GameScreenState.Empty) }
+//                }else{
+//                    _uistate.update { currentState ->  currentState.copy(screenState = GameScreenState.Success(result))}
+//                }
+//            }
+//        }
+//    }
+
+    fun getGame(gameName:String){
         viewModelScope.launch {
             try{
-//                val result = GameDealsApi.retrofitService.getStores()
-                val result = ""
+                val result = GameDealsApi.retrofitService.getGames(title = gameName)
+//                val result2 = GameDealsApi.retrofitService.getGameDetail(id="200")
+//                println(result2.info.title)
+//                println(result.size)
                 if(result.isEmpty()){
                     _uistate.update { currentState -> currentState.copy(screenState = GameScreenState.Empty) }
                 }else{
                     _uistate.update { currentState ->  currentState.copy(screenState = GameScreenState.Success(result))}
                 }
-            }catch (e: IOException){
+            } catch (e: IOException){
                 _uistate.update { currentState -> currentState.copy(screenState = GameScreenState.Failure) }
             }
         }
