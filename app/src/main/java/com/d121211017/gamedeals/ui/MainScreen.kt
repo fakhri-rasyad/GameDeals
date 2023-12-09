@@ -139,7 +139,7 @@ fun GameDealContent(
         ){
             GameSearchScreen(
                 isListView = uiState.isList,
-                screenState = uiState.screenState,
+                screenState = uiState.searchScreenState,
                 viewModel = viewModel,
                 changeGameView = {viewModel.changeGameView()},
                 onCardClick = {navController.navigate(GameDealScreen.Game.name)}

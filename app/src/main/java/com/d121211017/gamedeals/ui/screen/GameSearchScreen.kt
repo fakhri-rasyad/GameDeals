@@ -62,9 +62,17 @@ fun GameSearchScreen(
         GameSearchBar(isListView = isListView, viewModel = viewModel ,changeGameView = changeGameView)
         when(screenState){
             is GameScreenState.Success ->
-                GameDisplayGrid(isListView = isListView, gameList = screenState.game ,onCardClick = onCardClick)
+                GameDisplayGrid(
+                    isListView = isListView,
+                    gameList = screenState.game,
+                    onCardClick = onCardClick
+                )
             is GameScreenState.Loading ->
-                Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
                     CircularProgressIndicator()
                 }
             is GameScreenState.Empty ->
@@ -193,6 +201,8 @@ fun GameListCard(game: Game){
                 .crossfade(true)
                 .build(),
             contentDescription = game.internalName,
+//            placeholder = painterResource(id = R.drawable.image_fill0_wght400_grad0_opsz24),
+//            error = painterResource(id = R.drawable.broken_image_fill0_wght400_grad0_opsz24),
             Modifier.size(height = 72.dp, width = 128.dp),
             contentScale = ContentScale.Crop
         )
