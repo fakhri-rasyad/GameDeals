@@ -1,5 +1,7 @@
 package com.d121211017.gamedeals.ui.viewmodel
 
+import android.content.Context
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
@@ -49,7 +51,7 @@ class GameViewModel(private val gameDealsRepository: GameDealsRepository): ViewM
         }
     }
 
-    fun getGame(gameName:String){
+    fun getGame(gameName:String, context: Context, message: String){
         _uistate.update { currentState -> currentState.copy(searchScreenState = GameScreenState.Loading) }
         viewModelScope.launch {
             try{
@@ -58,6 +60,7 @@ class GameViewModel(private val gameDealsRepository: GameDealsRepository): ViewM
                     _uistate.update { currentState -> currentState.copy(searchScreenState = GameScreenState.Empty) }
                 }else{
                     _uistate.update { currentState ->  currentState.copy(searchScreenState = GameScreenState.Success(data))}
+
                 }
             } catch (e: IOException){
                 _uistate.update { currentState -> currentState.copy(searchScreenState = GameScreenState.Failure) }
@@ -75,6 +78,10 @@ class GameViewModel(private val gameDealsRepository: GameDealsRepository): ViewM
                 _uistate.update { currentState -> currentState.copy(dealState = DealsState.Failure) }
             }
         }
+    }
+
+    fun mToast(context: Context, message:String){
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
     companion object {

@@ -142,7 +142,6 @@ fun GameDealContent(
                 isListView = uiState.isList,
                 screenState = uiState.searchScreenState,
                 viewModel = viewModel,
-                changeGameView = {viewModel.changeGameView()},
                 onCardClick = {
                     navController.navigate(GameDealScreen.Game.name)
                 }

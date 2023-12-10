@@ -50,11 +50,15 @@ fun GameSearchScreen(
     isListView: Boolean,
     screenState: GameScreenState,
     viewModel: GameViewModel,
-    changeGameView: () -> Unit,
     onCardClick: () -> Unit,
-    modifier: Modifier = Modifier){
+    modifier: Modifier = Modifier
+){
     Column(modifier){
-        GameSearchBar(isListView = isListView, viewModel = viewModel ,changeGameView = changeGameView)
+        GameSearchBar(
+            isListView = isListView,
+            viewModel = viewModel,
+            changeGameView = {viewModel.changeGameView()}
+        )
         when(screenState){
             is GameScreenState.Success ->
                 GameDisplayGrid(
@@ -113,7 +117,9 @@ fun GameSearchBar(
                     .height(48.dp)
                     .weight(2f))
             Button(
-                onClick = {viewModel.getGame(userInput)},
+                onClick = {
+                    viewModel.getGame(userInput)
+                          },
                 modifier = Modifier.height(48.dp),
                 shape = RoundedCornerShape(8.dp)
             )
@@ -230,8 +236,8 @@ fun GameDisplayGrid(
     viewModel: GameViewModel,
     gameList:List<Game>,
     isListView: Boolean = false,
-    onCardClick: () -> Unit)
-{
+    onCardClick: () -> Unit
+) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(if(isListView) 1 else 2),
         Modifier.padding(horizontal = 16.dp),
@@ -239,7 +245,6 @@ fun GameDisplayGrid(
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         content =
         {
-
             items(gameList.size){
                 index ->
                 GameDisplayCard(
