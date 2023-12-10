@@ -2,6 +2,7 @@ package com.d121211017.gamedeals.data.network
 
 import com.d121211017.gamedeals.data.model.game.Game
 import com.d121211017.gamedeals.data.model.deals.GameDetail
+import com.d121211017.gamedeals.data.model.store.Store
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import retrofit2.Retrofit
 import retrofit2.http.GET
@@ -23,5 +24,5 @@ interface GameDealsApiService{
         @Query("id") id :String? = null,
     ): GameDetail
     @GET("stores")
-    suspend fun getStores():String
+    suspend fun getStores():List<Store>
 }

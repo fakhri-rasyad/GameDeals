@@ -142,13 +142,15 @@ fun GameDealContent(
                 screenState = uiState.searchScreenState,
                 viewModel = viewModel,
                 changeGameView = {viewModel.changeGameView()},
-                onCardClick = {navController.navigate(GameDealScreen.Game.name)}
+                onCardClick = {
+                    navController.navigate(GameDealScreen.Game.name)
+                }
             )
         }
         composable(
             GameDealScreen.Game.name
         ){
-            GameDetailScreen()
+            GameDetailScreen(uiState)
         }
         composable(
             GameDealScreen.About.name

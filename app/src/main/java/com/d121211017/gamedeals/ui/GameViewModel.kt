@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.AP
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.d121211017.gamedeals.DealsState
 import com.d121211017.gamedeals.DetailScreenState
 import com.d121211017.gamedeals.GameDealUiState
 import com.d121211017.gamedeals.GameDealsApplication
@@ -36,6 +37,7 @@ class GameViewModel(private val gameDealsRepository: GameDealsRepository): ViewM
         _uistate.update {currentState -> currentState.copy(isLightTheme = !_uistate.value.isLightTheme)}
     }
     fun getGameDetail(gameId:String){
+        _uistate.update { currentState -> currentState.copy(detailScreenState = DetailScreenState.Loading) }
         viewModelScope.launch {
             try{
                 val data = gameDealsRepository.getDeals(gameId)
@@ -58,6 +60,18 @@ class GameViewModel(private val gameDealsRepository: GameDealsRepository): ViewM
                 }
             } catch (e: IOException){
                 _uistate.update { currentState -> currentState.copy(searchScreenState = GameScreenState.Failure) }
+            }
+        }
+    }
+
+    fun getStores(){
+        _uistate.update { currentState -> currentState.copy(dealState = DealsState.Loading) }
+        viewModelScope.launch {
+            try{
+                val data = gameDealsRepository.getStores()
+                _uistate.update { currentState -> currentState.copy(dealState = DealsState.Success(data)) }
+            } catch (e :IOException){
+                _uistate.update { currentState -> currentState.copy(dealState = DealsState.Failure) }
             }
         }
     }

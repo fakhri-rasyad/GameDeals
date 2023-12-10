@@ -20,26 +20,35 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
+import coil.compose.AsyncImagePainter
+import coil.request.ImageRequest
+import com.d121211017.gamedeals.DealsState
 import com.d121211017.gamedeals.DetailScreenState
 import com.d121211017.gamedeals.GameDealUiState
 import com.d121211017.gamedeals.R
+import com.d121211017.gamedeals.data.model.deals.Deal
+import com.d121211017.gamedeals.data.model.deals.GameDetail
+import com.d121211017.gamedeals.data.model.store.Store
 import com.d121211017.gamedeals.ui.GameViewModel
 import kotlin.random.Random
 
 @Composable
-fun GameDetailScreen(viewModel: GameViewModel, uistate: GameDealUiState){
+fun GameDetailScreen(uistate: GameDealUiState){
     Column(modifier = Modifier
         .fillMaxSize()
     ){
         when(uistate.detailScreenState){
             is DetailScreenState.Success -> Column {
-                GameDetailHeader(image = R.drawable.batman_2, gameName = "Game Name")
-                GameDealList()
+                GameDetailHeader(uistate.detailScreenState.gameDetail)
+                Spacer(modifier = Modifier.height(8.dp))
+                GameDealList(uistate, uistate.detailScreenState.gameDetail.deals)
             }
             is DetailScreenState.Loading -> Column{
                 CircularProgressIndicator()
@@ -53,21 +62,27 @@ fun GameDetailScreen(viewModel: GameViewModel, uistate: GameDealUiState){
 }
 
 @Composable
-fun GameDetailHeader(image: Int, gameName: String){
+fun GameDetailHeader(gameDetail: GameDetail){
     Row(
         Modifier
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ){
-        Image(
-            painter = painterResource(id = image),
-            contentDescription = gameName,
+        AsyncImage(
+            model = ImageRequest
+                .Builder(LocalContext.current)
+                .data(gameDetail.info.thumb)
+                .crossfade(enable = true)
+                .build(),
+            placeholder = painterResource(id = R.drawable.image_fill0_wght400_grad0_opsz24),
+            error = painterResource(id = R.drawable.broken_image_fill0_wght400_grad0_opsz24),
+            contentDescription = gameDetail.info.title,
             modifier = Modifier
                 .size(width = 192.dp, height = 144.dp)
                 .fillMaxWidth()
                 .weight(1f)
         )
-        Text(gameName, textAlign = TextAlign.Center, fontSize = 24.sp,modifier = Modifier
+        Text(gameDetail.info.title, textAlign = TextAlign.Center, fontSize = 24.sp,modifier = Modifier
             .fillMaxWidth()
             .weight(1f))
     }
@@ -75,10 +90,9 @@ fun GameDetailHeader(image: Int, gameName: String){
 
 @Composable
 fun GameDealCard(
-    image: Int,
-    initialPrice: String,
-    currentPrice: String,
-    gameName: String){
+    deal:Deal,
+    store: Store
+){
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -90,9 +104,15 @@ fun GameDealCard(
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically
         ){
-        Image(
-            painter = painterResource(id = image),
-            contentDescription = gameName,
+        AsyncImage(
+            model = ImageRequest
+                .Builder(LocalContext.current)
+                .data("https://www.cheapshark.com" + store.images.banner)
+                .crossfade(enable = true)
+                .build(),
+            placeholder = painterResource(id = R.drawable.image_fill0_wght400_grad0_opsz24),
+            error = painterResource(id = R.drawable.broken_image_fill0_wght400_grad0_opsz24),
+            contentDescription = deal.dealID,
             modifier = Modifier
                 .size(width = 96.dp, height = 32.dp)
                 .fillMaxWidth()
@@ -105,15 +125,15 @@ fun GameDealCard(
                 .weight(1f),
         ) {
             Text(
-                text = gameName,
-                fontSize = 24.sp,
+                text = store.storeName,
+                fontSize = 16.sp,
                 color = MaterialTheme.colorScheme.onPrimary
             )
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.End){
                 Text(
-                    "\$$initialPrice",
+                    "\$${deal.retailPrice}",
                     textAlign = TextAlign.End,
                     textDecoration = TextDecoration.LineThrough,
                     color = MaterialTheme.colorScheme.onPrimary
@@ -121,7 +141,7 @@ fun GameDealCard(
                 Spacer(
                     modifier = Modifier.width(8.dp))
                 Text(
-                    "\$$currentPrice",
+                    "\$${deal.price}",
                     textAlign = TextAlign.End,
                     color = MaterialTheme.colorScheme.onPrimary
                 )
@@ -131,17 +151,17 @@ fun GameDealCard(
 }
 
 @Composable
-fun GameDealList(){
-    val storaImages = arrayOf(R.drawable.greenman, R.drawable.gamergate, R.drawable.steam)
-    LazyColumn{
-        items(8){
-            _ ->
-            GameDealCard(
-                image = storaImages[Random.nextInt(0, storaImages.size)],
-            initialPrice = "19.99",
-            currentPrice = "4.99",
-            gameName = "Store Name")
-            Spacer(modifier = Modifier.height(16.dp))
+fun GameDealList(uistate: GameDealUiState, dealList: List<Deal>){
+    when(uistate.dealState){
+        is DealsState.Success -> LazyColumn{
+            items(dealList.size){ index ->
+                val store: Store = uistate.dealState.store.first{it.storeID == dealList[index].storeID}
+                GameDealCard(deal = dealList[index], store = store)
+                Spacer(modifier = Modifier.height(16.dp))
+            }
         }
+        is DealsState.Loading -> CircularProgressIndicator()
+        is DealsState.Failure -> Text("Error")
     }
+
 }

@@ -63,6 +63,7 @@ fun GameSearchScreen(
         when(screenState){
             is GameScreenState.Success ->
                 GameDisplayGrid(
+                    viewModel = viewModel,
                     isListView = isListView,
                     gameList = screenState.game,
                     onCardClick = onCardClick
@@ -139,7 +140,13 @@ fun GameSearchBar(
                 modifier = Modifier.weight(1f),
                 shape = RoundedCornerShape(8.dp)
             ){
-                Icon(painter = painterResource(id = if(isListView) R.drawable.view_list_fill1_wght400_grad0_opsz24 else R.drawable.grid_view_fill1_wght400_grad0_opsz24), "gridView")
+                Icon(
+                    painter = painterResource(
+                        id = if(isListView)
+                            R.drawable.view_list_fill1_wght400_grad0_opsz24
+                        else
+                            R.drawable.grid_view_fill1_wght400_grad0_opsz24),
+                    "gridView")
             }
 
         }
@@ -173,12 +180,16 @@ fun IconAndDetail(@DrawableRes image: Int, description: String, modifier: Modifi
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun GameDisplayCard(onCardClick:()->Unit, game:Game, isList: Boolean){
+fun GameDisplayCard(viewModel: GameViewModel, onCardClick:()->Unit, game:Game, isList: Boolean){
     Card(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.primary
         ),
-        onClick = {onCardClick()}
+        onClick = {
+            onCardClick()
+            viewModel.getGameDetail(game.gameID)
+            viewModel.getStores()
+        }
     ){
         if(isList){
             GameListCard(game = game)
@@ -196,15 +207,16 @@ fun GameListCard(game: Game){
         verticalAlignment = Alignment.CenterVertically
     ) {
         AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
+            model = ImageRequest
+                .Builder(LocalContext.current)
                 .data(game.thumb)
-                .crossfade(true)
+                .crossfade(enable = true)
                 .build(),
+            placeholder = painterResource(id = R.drawable.image_fill0_wght400_grad0_opsz24),
+            error = painterResource(id = R.drawable.broken_image_fill0_wght400_grad0_opsz24),
             contentDescription = game.internalName,
-//            placeholder = painterResource(id = R.drawable.image_fill0_wght400_grad0_opsz24),
-//            error = painterResource(id = R.drawable.broken_image_fill0_wght400_grad0_opsz24),
-            Modifier.size(height = 72.dp, width = 128.dp),
-            contentScale = ContentScale.Crop
+            modifier = Modifier.size(height = 72.dp, width = 128.dp),
+            contentScale = ContentScale.FillBounds
         )
         Spacer(modifier = Modifier.width(8.dp))
         Text(
@@ -225,13 +237,16 @@ fun GameGridCard(game : Game){
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
+            model = ImageRequest
+                .Builder(LocalContext.current)
                 .data(game.thumb)
-                .crossfade(true)
+                .crossfade(enable = true)
                 .build(),
+            placeholder = painterResource(id = R.drawable.image_fill0_wght400_grad0_opsz24),
+            error = painterResource(id = R.drawable.broken_image_fill0_wght400_grad0_opsz24),
             contentDescription = game.internalName,
-            Modifier.size(height = 72.dp, width = 128.dp),
-            contentScale = ContentScale.Crop
+            modifier = Modifier.size(height = 72.dp, width = 128.dp),
+            contentScale = ContentScale.FillBounds
         )
         Spacer(modifier = Modifier.width(8.dp))
         Text(
@@ -244,20 +259,29 @@ fun GameGridCard(game : Game){
 }
 
 @Composable
-fun GameDisplayGrid(gameList:List<Game> ,isListView: Boolean = false, onCardClick: () -> Unit){
+fun GameDisplayGrid(
+    viewModel: GameViewModel,
+    gameList:List<Game>,
+    isListView: Boolean = false,
+    onCardClick: () -> Unit)
+{
     LazyVerticalGrid(
         columns = GridCells.Fixed(if(isListView) 1 else 2),
         Modifier.padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.spacedBy(24.dp),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
-        content = {
-        items(gameList.size){
-            index -> GameDisplayCard(
-            isList = isListView,
-            game = gameList[index],
-            onCardClick = onCardClick
-            )
+        content =
+        {
+            items(gameList.size){
+                index ->
+                GameDisplayCard(
+                    viewModel = viewModel,
+                    isList = isListView,
+                    game = gameList[index],
+                    onCardClick = onCardClick
+                )
+            }
         }
-    })
+    )
 }
 
