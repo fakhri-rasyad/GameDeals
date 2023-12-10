@@ -39,12 +39,13 @@ class GameViewModel(private val gameDealsRepository: GameDealsRepository): ViewM
         _uistate.update {currentState -> currentState.copy(isLightTheme = !_uistate.value.isLightTheme)}
     }
 
-    fun getGameDetail(gameId:String){
+    fun getGameDetail(gameId:String, context: Context, message: String){
         _uistate.update { currentState -> currentState.copy(detailScreenState = DetailScreenState.Loading) }
         viewModelScope.launch {
             try{
                 val data = gameDealsRepository.getDeals(gameId)
                 _uistate.update { currentState -> currentState.copy(detailScreenState = DetailScreenState.Success(data)) }
+                mToast(context, message)
             }catch(e:IOException){
                 _uistate.update { currentState -> currentState.copy(detailScreenState = DetailScreenState.Failure) }
             }
@@ -60,7 +61,7 @@ class GameViewModel(private val gameDealsRepository: GameDealsRepository): ViewM
                     _uistate.update { currentState -> currentState.copy(searchScreenState = GameScreenState.Empty) }
                 }else{
                     _uistate.update { currentState ->  currentState.copy(searchScreenState = GameScreenState.Success(data))}
-
+                    mToast(context, message)
                 }
             } catch (e: IOException){
                 _uistate.update { currentState -> currentState.copy(searchScreenState = GameScreenState.Failure) }

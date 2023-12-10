@@ -110,6 +110,7 @@ fun GameSearchBar(
     var userInput by remember { mutableStateOf("") }
     Column {
         Row(Modifier.fillMaxWidth()){
+            val context = LocalContext.current
             TextField(
                 value = userInput,
                 onValueChange = {userInput = it},
@@ -118,7 +119,7 @@ fun GameSearchBar(
                     .weight(2f))
             Button(
                 onClick = {
-                    viewModel.getGame(userInput)
+                    viewModel.getGame(userInput, context = context, message = "Klik kartu untuk mendapat berbagai penawaran untuk game ")
                           },
                 modifier = Modifier.height(48.dp),
                 shape = RoundedCornerShape(8.dp)
@@ -154,13 +155,17 @@ fun GameSearchBar(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GameDisplayCard(viewModel: GameViewModel, onCardClick:()->Unit, game:Game, isList: Boolean){
+    val context = LocalContext.current
     Card(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.primary
         ),
         onClick = {
             onCardClick()
-            viewModel.getGameDetail(game.gameID)
+            viewModel.getGameDetail(
+                game.gameID,
+                context = context,
+                message = "Klik penawaran untuk dibawa ke halaman penawaran dari toko")
             viewModel.getStores()
         }
     ){
