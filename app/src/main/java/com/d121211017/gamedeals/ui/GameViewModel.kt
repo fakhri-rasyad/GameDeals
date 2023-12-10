@@ -36,6 +36,7 @@ class GameViewModel(private val gameDealsRepository: GameDealsRepository): ViewM
     fun changeTheme(){
         _uistate.update {currentState -> currentState.copy(isLightTheme = !_uistate.value.isLightTheme)}
     }
+
     fun getGameDetail(gameId:String){
         _uistate.update { currentState -> currentState.copy(detailScreenState = DetailScreenState.Loading) }
         viewModelScope.launch {

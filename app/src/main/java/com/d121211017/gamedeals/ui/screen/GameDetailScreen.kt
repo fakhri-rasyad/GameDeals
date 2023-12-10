@@ -37,12 +37,14 @@ import com.d121211017.gamedeals.data.model.deals.Deal
 import com.d121211017.gamedeals.data.model.deals.GameDetail
 import com.d121211017.gamedeals.data.model.store.Store
 import com.d121211017.gamedeals.ui.GameViewModel
+import com.d121211017.gamedeals.ui.component.placeholderui.IconAndDetail
 import kotlin.random.Random
 
 @Composable
 fun GameDetailScreen(uistate: GameDealUiState){
     Column(modifier = Modifier
-        .fillMaxSize()
+        .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
     ){
         when(uistate.detailScreenState){
             is DetailScreenState.Success -> Column {
@@ -50,12 +52,12 @@ fun GameDetailScreen(uistate: GameDealUiState){
                 Spacer(modifier = Modifier.height(8.dp))
                 GameDealList(uistate, uistate.detailScreenState.gameDetail.deals)
             }
-            is DetailScreenState.Loading -> Column{
-                CircularProgressIndicator()
-            }
-            is DetailScreenState.Failure -> {
-                Text("Pengambilan data gagal")
-            }
+            is DetailScreenState.Loading -> CircularProgressIndicator()
+            is DetailScreenState.Failure ->
+                IconAndDetail(
+                    image = R.drawable.warning_fill1_wght400_grad0_opsz24,
+                    description = "Gagal mengambil informasi game, silahkan coba lagi nanti"
+                )
         }
     }
 
@@ -161,7 +163,10 @@ fun GameDealList(uistate: GameDealUiState, dealList: List<Deal>){
             }
         }
         is DealsState.Loading -> CircularProgressIndicator()
-        is DealsState.Failure -> Text("Error")
+        is DealsState.Failure -> IconAndDetail(
+            image = R.drawable.warning_fill1_wght400_grad0_opsz24,
+            description = "Gagal mendapatkan penawaran silahkan coba lagi nanti"
+        )
     }
 
 }

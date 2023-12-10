@@ -29,5 +29,6 @@ data class GameDealUiState(
     val isLightTheme:Boolean = true,
     val searchScreenState: GameScreenState = GameScreenState.Start,
     val detailScreenState: DetailScreenState = DetailScreenState.Loading,
-    val dealState:DealsState = DealsState.Loading
+    val dealState:DealsState = DealsState.Loading,
+    val isSortedAtoZ: Boolean = true,
 )

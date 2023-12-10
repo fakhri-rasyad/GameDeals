@@ -1,7 +1,5 @@
 package com.d121211017.gamedeals.ui.screen
 
-import androidx.annotation.DrawableRes
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -33,22 +31,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.d121211017.gamedeals.GameScreenState
 import com.d121211017.gamedeals.R
 import com.d121211017.gamedeals.data.model.game.Game
 import com.d121211017.gamedeals.ui.GameViewModel
-import kotlin.random.Random
+import com.d121211017.gamedeals.ui.component.placeholderui.IconAndDetail
 
 @Composable
 fun GameSearchScreen(
@@ -126,18 +121,10 @@ fun GameSearchBar(
                 Icon(imageVector = Icons.Default.Search, contentDescription = "")
             }
         }
-        Row(Modifier.fillMaxWidth()){
-            Button(
-                onClick = {},
-                modifier = Modifier.weight(1f),
-                shape = RoundedCornerShape(8.dp)
-            ){
-                Icon(
-                    painter = painterResource(id = R.drawable.sort_fill1_wght400_grad0_opsz24), "gridView")
-            }
+        Spacer(modifier = Modifier.height(8.dp))
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End){
             Button(
                 onClick = {changeGameView()},
-                modifier = Modifier.weight(1f),
                 shape = RoundedCornerShape(8.dp)
             ){
                 Icon(
@@ -147,37 +134,17 @@ fun GameSearchBar(
                         else
                             R.drawable.grid_view_fill1_wght400_grad0_opsz24),
                     "gridView")
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(if(isListView) "List" else "Grid")
             }
 
         }
     }
-    Spacer(Modifier.height(16.dp))
+    Spacer(Modifier.height(8.dp))
 
 }
 
-@Composable
-fun IconAndDetail(@DrawableRes image: Int, description: String, modifier: Modifier = Modifier){
-    Column(
-        modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Image(
-            painterResource(id = image),
-            contentDescription = "",
-            Modifier.size(128.dp),
-            colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.onBackground)
-        )
-        Spacer(
-            Modifier.height(16.dp)
-        )
-        Text(
-            description,
-            textAlign = TextAlign.Center,
-            lineHeight = 28.sp,
-            fontSize = 28.sp)
-    }
-}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GameDisplayCard(viewModel: GameViewModel, onCardClick:()->Unit, game:Game, isList: Boolean){
@@ -272,6 +239,7 @@ fun GameDisplayGrid(
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         content =
         {
+
             items(gameList.size){
                 index ->
                 GameDisplayCard(
