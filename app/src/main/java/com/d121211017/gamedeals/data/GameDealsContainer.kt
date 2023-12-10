@@ -1,6 +1,8 @@
 package com.d121211017.gamedeals.data
 
-import com.d121211017.gamedeals.data.network.GameDealsApiService
+import com.d121211017.gamedeals.data.source.remote.GameDealsApiService
+import com.d121211017.gamedeals.data.repository.GameDealsRepository
+import com.d121211017.gamedeals.data.repository.NetworkGameDealsRepository
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType

@@ -1,4 +1,4 @@
-package com.d121211017.gamedeals.ui.component.placeholderui
+package com.d121211017.gamedeals.ui.component.placeholder
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image

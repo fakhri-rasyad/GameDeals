@@ -1,4 +1,4 @@
-package com.d121211017.gamedeals.data.network
+package com.d121211017.gamedeals.data.source.remote
 
 import com.d121211017.gamedeals.data.model.game.Game
 import com.d121211017.gamedeals.data.model.deals.GameDetail

@@ -1,4 +1,4 @@
-package com.d121211017.gamedeals.ui.screen
+package com.d121211017.gamedeals.ui.screen.search
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -42,8 +42,8 @@ import coil.request.ImageRequest
 import com.d121211017.gamedeals.GameScreenState
 import com.d121211017.gamedeals.R
 import com.d121211017.gamedeals.data.model.game.Game
-import com.d121211017.gamedeals.ui.GameViewModel
-import com.d121211017.gamedeals.ui.component.placeholderui.IconAndDetail
+import com.d121211017.gamedeals.ui.viewmodel.GameViewModel
+import com.d121211017.gamedeals.ui.component.placeholder.IconAndDetail
 
 @Composable
 fun GameSearchScreen(
@@ -102,7 +102,7 @@ fun GameSearchScreen(
 @Composable
 fun GameSearchBar(
     viewModel: GameViewModel,
-    isListView:Boolean ,changeGameView: ()->Unit){
+    isListView:Boolean, changeGameView: ()->Unit){
     var userInput by remember { mutableStateOf("") }
     Column {
         Row(Modifier.fillMaxWidth()){

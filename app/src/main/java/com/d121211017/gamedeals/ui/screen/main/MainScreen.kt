@@ -1,4 +1,4 @@
-package com.d121211017.gamedeals.ui
+package com.d121211017.gamedeals.ui.screen.main
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
@@ -20,9 +20,10 @@ import androidx.navigation.compose.rememberNavController
 import com.d121211017.gamedeals.GameDealUiState
 import com.d121211017.gamedeals.ui.component.appbar.GameDealAppBar
 import com.d121211017.gamedeals.ui.component.drawer.DrawerSheet
-import com.d121211017.gamedeals.ui.screen.AboutScreen
-import com.d121211017.gamedeals.ui.screen.GameDetailScreen
-import com.d121211017.gamedeals.ui.screen.GameSearchScreen
+import com.d121211017.gamedeals.ui.screen.about.AboutScreen
+import com.d121211017.gamedeals.ui.screen.detail.GameDetailScreen
+import com.d121211017.gamedeals.ui.screen.search.GameSearchScreen
+import com.d121211017.gamedeals.ui.viewmodel.GameViewModel
 import kotlinx.coroutines.launch
 
 enum class GameDealScreen(val title: String){

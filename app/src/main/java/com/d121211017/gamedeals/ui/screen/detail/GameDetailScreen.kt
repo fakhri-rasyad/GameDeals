@@ -1,6 +1,5 @@
-package com.d121211017.gamedeals.ui.screen
+package com.d121211017.gamedeals.ui.screen.detail
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,7 +26,6 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import coil.compose.AsyncImagePainter
 import coil.request.ImageRequest
 import com.d121211017.gamedeals.DealsState
 import com.d121211017.gamedeals.DetailScreenState
@@ -36,9 +34,7 @@ import com.d121211017.gamedeals.R
 import com.d121211017.gamedeals.data.model.deals.Deal
 import com.d121211017.gamedeals.data.model.deals.GameDetail
 import com.d121211017.gamedeals.data.model.store.Store
-import com.d121211017.gamedeals.ui.GameViewModel
-import com.d121211017.gamedeals.ui.component.placeholderui.IconAndDetail
-import kotlin.random.Random
+import com.d121211017.gamedeals.ui.component.placeholder.IconAndDetail
 
 @Composable
 fun GameDetailScreen(uistate: GameDealUiState){

@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import com.d121211017.gamedeals.R
-import com.d121211017.gamedeals.ui.GameDealScreen
+import com.d121211017.gamedeals.ui.screen.main.GameDealScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

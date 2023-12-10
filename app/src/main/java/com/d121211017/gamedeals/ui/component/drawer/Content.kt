@@ -18,7 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.d121211017.gamedeals.ui.GameDealScreen
+import com.d121211017.gamedeals.ui.screen.main.GameDealScreen
 
 @Composable
 fun DrawerContent(

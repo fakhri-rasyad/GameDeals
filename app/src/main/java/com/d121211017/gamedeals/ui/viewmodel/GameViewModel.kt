@@ -1,4 +1,4 @@
-package com.d121211017.gamedeals.ui
+package com.d121211017.gamedeals.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -11,7 +11,7 @@ import com.d121211017.gamedeals.DetailScreenState
 import com.d121211017.gamedeals.GameDealUiState
 import com.d121211017.gamedeals.GameDealsApplication
 import com.d121211017.gamedeals.GameScreenState
-import com.d121211017.gamedeals.data.GameDealsRepository
+import com.d121211017.gamedeals.data.repository.GameDealsRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

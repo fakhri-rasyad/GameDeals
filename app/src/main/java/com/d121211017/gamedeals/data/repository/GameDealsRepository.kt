@@ -1,9 +1,9 @@
-package com.d121211017.gamedeals.data
+package com.d121211017.gamedeals.data.repository
 
 import com.d121211017.gamedeals.data.model.deals.GameDetail
 import com.d121211017.gamedeals.data.model.game.Game
 import com.d121211017.gamedeals.data.model.store.Store
-import com.d121211017.gamedeals.data.network.GameDealsApiService
+import com.d121211017.gamedeals.data.source.remote.GameDealsApiService
 
 interface GameDealsRepository {
     suspend fun getGames(gameName: String): List<Game>
@@ -13,7 +13,7 @@ interface GameDealsRepository {
 
 class NetworkGameDealsRepository(
     private val gameDealsApiService : GameDealsApiService
-):GameDealsRepository{
+): GameDealsRepository {
     override suspend fun getGames(gameName:String): List<Game> = gameDealsApiService.getGames(gameName)
 
     override suspend fun getDeals(gameId:String): GameDetail = gameDealsApiService.getGameDetail(gameId)
