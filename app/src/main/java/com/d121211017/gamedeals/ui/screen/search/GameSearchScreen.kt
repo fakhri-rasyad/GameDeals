@@ -154,11 +154,16 @@ fun GameSearchBar(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun GameDisplayCard(viewModel: GameViewModel, onCardClick:()->Unit, game:Game, isList: Boolean){
+fun GameDisplayCard(
+    viewModel: GameViewModel,
+    onCardClick:()->Unit,
+    game:Game,
+    isList: Boolean
+){
     val context = LocalContext.current
     Card(
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primary
+            containerColor = MaterialTheme.colorScheme.primary,
         ),
         onClick = {
             onCardClick()
@@ -209,26 +214,31 @@ fun GameListCard(game: Game){
 @Composable
 fun GameGridCard(game : Game){
     Column(
-        Modifier
-            .fillMaxWidth()
-            .padding(8.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        Modifier.height(160.dp)
     ) {
-        AsyncImage(
-            model = ImageRequest
-                .Builder(LocalContext.current)
-                .data(game.thumb)
-                .crossfade(enable = true)
-                .build(),
-            placeholder = painterResource(id = R.drawable.image_fill0_wght400_grad0_opsz24),
-            error = painterResource(id = R.drawable.broken_image_fill0_wght400_grad0_opsz24),
-            contentDescription = game.internalName,
-            modifier = Modifier.size(height = 72.dp, width = 128.dp),
-            contentScale = ContentScale.FillBounds
-        )
-        Spacer(modifier = Modifier.width(8.dp))
+        Column(
+            Modifier
+                .fillMaxWidth()
+                .height(96.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            AsyncImage(
+                model = ImageRequest
+                    .Builder(LocalContext.current)
+                    .data(game.thumb)
+                    .crossfade(enable = true)
+                    .build(),
+                placeholder = painterResource(id = R.drawable.image_fill0_wght400_grad0_opsz24),
+                error = painterResource(id = R.drawable.broken_image_fill0_wght400_grad0_opsz24),
+                contentDescription = game.internalName,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+        }
         Text(
             game.external,
+            modifier = Modifier.padding(8.dp),
             fontWeight = FontWeight.Bold,
             overflow = TextOverflow.Ellipsis,
             maxLines = 2
