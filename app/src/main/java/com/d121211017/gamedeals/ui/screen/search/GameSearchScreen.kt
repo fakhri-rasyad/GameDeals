@@ -39,7 +39,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.d121211017.gamedeals.GameScreenState
+import com.d121211017.gamedeals.ui.GameScreenState
 import com.d121211017.gamedeals.R
 import com.d121211017.gamedeals.data.model.game.Game
 import com.d121211017.gamedeals.ui.viewmodel.GameViewModel

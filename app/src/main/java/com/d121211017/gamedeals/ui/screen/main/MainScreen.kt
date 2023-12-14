@@ -17,7 +17,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.d121211017.gamedeals.GameDealUiState
+import com.d121211017.gamedeals.ui.GameDealUiState
 import com.d121211017.gamedeals.ui.component.appbar.GameDealAppBar
 import com.d121211017.gamedeals.ui.component.drawer.DrawerSheet
 import com.d121211017.gamedeals.ui.screen.about.AboutScreen

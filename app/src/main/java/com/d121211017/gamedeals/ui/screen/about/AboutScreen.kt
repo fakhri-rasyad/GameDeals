@@ -1,5 +1,6 @@
 package com.d121211017.gamedeals.ui.screen.about
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -16,7 +17,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.d121211017.gamedeals.R
 
 @Composable
 fun AboutScreen(modifier: Modifier = Modifier){
@@ -36,10 +39,12 @@ fun AboutHeader(){
             .padding(8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ){
-        Icon(
-            imageVector = Icons.Rounded.Face,
-            contentDescription = "Logo Image",
-            modifier = Modifier.size(64.dp)
+        Image(
+            painter = painterResource(
+                id = R.drawable.cheapshark_logo
+            ),
+            contentDescription = "logo",
+            modifier = Modifier.size(size = 64.dp)
         )
         Spacer(Modifier.width(32.dp))
         Column {

@@ -8,11 +8,11 @@ import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.AP
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.d121211017.gamedeals.DealsState
-import com.d121211017.gamedeals.DetailScreenState
-import com.d121211017.gamedeals.GameDealUiState
+import com.d121211017.gamedeals.ui.DealsState
+import com.d121211017.gamedeals.ui.DetailScreenState
+import com.d121211017.gamedeals.ui.GameDealUiState
 import com.d121211017.gamedeals.GameDealsApplication
-import com.d121211017.gamedeals.GameScreenState
+import com.d121211017.gamedeals.ui.GameScreenState
 import com.d121211017.gamedeals.data.repository.GameDealsRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

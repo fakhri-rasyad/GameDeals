@@ -29,9 +29,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.d121211017.gamedeals.DealsState
-import com.d121211017.gamedeals.DetailScreenState
-import com.d121211017.gamedeals.GameDealUiState
+import com.d121211017.gamedeals.ui.DealsState
+import com.d121211017.gamedeals.ui.DetailScreenState
+import com.d121211017.gamedeals.ui.GameDealUiState
 import com.d121211017.gamedeals.R
 import com.d121211017.gamedeals.data.model.deals.Deal
 import com.d121211017.gamedeals.data.model.deals.GameDetail
